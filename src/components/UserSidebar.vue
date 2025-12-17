@@ -1,12 +1,27 @@
 <script setup>
-import { onMounted, onBeforeUnmount, ref } from 'vue'
+import { onMounted, onBeforeUnmount, onUpdated, nextTick, ref } from 'vue'
 import vectorUserLight from '../assets/images/item/vector-user.svg'
 import vectorUserDark from '../assets/images/item/vector-user_dark.svg'
 import logoLight from '../assets/images/logo/logo.svg'
 import logoDark from '../assets/images/logo/logo-2.svg'
+import avatarImg from '../assets/images/avatar/avatar.png'
+
 const root = ref(null)
+const isDark = ref(false)
 let t = null
+let observer = null
+
 onMounted(() => {
+  isDark.value = document.body.classList.contains('dark-mode')
+  observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.attributeName === 'class') {
+        isDark.value = document.body.classList.contains('dark-mode')
+      }
+    })
+  })
+  observer.observe(document.body, { attributes: true })
+
   const headline = root.value?.querySelector('.animationtext')
   if (!headline) return
   if (headline.classList.contains('clip')) return
@@ -37,9 +52,20 @@ onMounted(() => {
     next.classList.add('is-visible')
     idx = (idx + 1) % items.length
   }, 2500)
+  nextTick(() => {
+    if (window.refreshAnimations) window.refreshAnimations()
+  })
 })
+
+onUpdated(() => {
+  nextTick(() => {
+    if (window.refreshAnimations) window.refreshAnimations()
+  })
+})
+
 onBeforeUnmount(() => {
   if (t) clearInterval(t)
+  if (observer) observer.disconnect()
 })
 </script>
 <template>
@@ -47,12 +73,11 @@ onBeforeUnmount(() => {
     <div class="wrap">
       <div class="user-image">
         <div class="image">
-          <img loading="lazy" width="468" height="856" src="../assets/images/avatar/avatar.png" alt="Image">
+          <img loading="lazy" width="468" height="856" :src="avatarImg" alt="Image">
         </div>
         <div class="meta-left d-none d-sm-block">
           <div class="bg-item-svg">
-            <img class="image-switch" :data-light="vectorUserLight" :data-dark="vectorUserDark" width="32" height="227"
-                 :src="vectorUserLight" alt="Image">
+            <img :src="isDark ? vectorUserDark : vectorUserLight" width="32" height="227" alt="Image">
           </div>
           <p class="avaiable-dot vertical text-body-3 text-black-72 fw-medium">
             <span class="text-vertical">Available for Work</span>
@@ -61,8 +86,7 @@ onBeforeUnmount(() => {
         </div>
       </div>
       <div class="user-logo d-none d-lg-block">
-        <img class="image-switch" :data-light="logoLight" :data-dark="logoDark" loading="lazy"
-             width="40" height="40" :src="logoLight" alt="Image">
+        <img loading="lazy" width="40" height="40" :src="isDark ? logoDark : logoLight" alt="Image">
       </div>
       <ul class="tf-social-icon-2 user-social d-grid">
         <li><a href="#"><i class="icon icon-x"></i></a></li>

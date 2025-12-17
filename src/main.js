@@ -50,3 +50,15 @@ const applyImageSwitch = () => {
   })
 }
 applyImageSwitch()
+window.applyImageSwitch = applyImageSwitch
+
+window.refreshAnimations = () => {
+  if (window.ScrollTrigger) {
+    window.ScrollTrigger.getAll().forEach(t => t.kill())
+  }
+  if (window.runAnimations) {
+    window.runAnimations()
+  }
+}
+
+new MutationObserver(() => applyImageSwitch()).observe(document.body, { attributes: true, attributeFilter: ['class'] })

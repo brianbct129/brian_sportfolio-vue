@@ -75,7 +75,7 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, onUpdated, nextTick } from 'vue'
 import brand1 from '../assets/images/brand/brand-1.svg'
 import brand1Dark from '../assets/images/brand/brand-1_dark.svg'
 import brand2 from '../assets/images/brand/brand-2.svg'
@@ -105,16 +105,27 @@ onMounted(() => {
 
   // Circular text logic
   const circular = document.getElementById('circularText')
-  if (!circular) return
-  const text = 'award winning agency - since 2022 -'
-  const chars = Array.from(text)
-  const degree = 360 / chars.length
-  circular.innerHTML = ''
-  chars.forEach((char, i) => {
-    const span = document.createElement('span')
-    span.textContent = char
-    span.style.transform = `rotate(${i * degree}deg)`
-    circular.appendChild(span)
+  if (circular) {
+    const text = 'award winning agency - since 2022 -'
+    const chars = Array.from(text)
+    const degree = 360 / chars.length
+    circular.innerHTML = ''
+    chars.forEach((char, i) => {
+      const span = document.createElement('span')
+      span.textContent = char
+      span.style.transform = `rotate(${i * degree}deg)`
+      circular.appendChild(span)
+    })
+  }
+
+  nextTick(() => {
+    if (window.refreshAnimations) window.refreshAnimations()
+  })
+})
+
+onUpdated(() => {
+  nextTick(() => {
+    if (window.refreshAnimations) window.refreshAnimations()
   })
 })
 

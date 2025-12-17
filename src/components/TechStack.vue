@@ -78,7 +78,7 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, onUpdated, nextTick } from 'vue'
 import tech2Light from '../assets/images/section/tech-2.svg'
 import tech2Dark from '../assets/images/section/tech-2_dark.svg'
 
@@ -91,6 +91,16 @@ onMounted(() => {
     isDark.value = document.body.classList.contains('dark-mode')
   })
   observer.observe(document.body, { attributes: true, attributeFilter: ['class'] })
+  
+  nextTick(() => {
+    if (window.refreshAnimations) window.refreshAnimations()
+  })
+})
+
+onUpdated(() => {
+  nextTick(() => {
+    if (window.refreshAnimations) window.refreshAnimations()
+  })
 })
 
 onBeforeUnmount(() => {

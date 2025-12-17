@@ -1,7 +1,7 @@
 <template>
   <div class="body-background">
     <div class="bg-item">
-      <img loading="lazy" width="1440" height="900" src="./assets/images/item/cloud-bg.png" alt="Image">
+      <img loading="lazy" width="1440" height="900" :src="cloudBg" alt="Image">
     </div>
     <div class="bg-video video-dark">
       <video class="video" muted autoplay loop playsinline>
@@ -12,6 +12,7 @@
   </div>
 </template>
 <script setup>
+import cloudBg from '../assets/images/item/cloud-bg.png'
 </script>
 <style scoped>
 </style>

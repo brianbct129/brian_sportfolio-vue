@@ -83,7 +83,7 @@
   <!-- /About -->
 </template>
 <script setup>
-import { onMounted, onBeforeUnmount, ref } from 'vue'
+import { onMounted, onBeforeUnmount, onUpdated, nextTick, ref } from 'vue'
 const root = ref(null)
 function attachHoverHandlers(container) {
   const items = Array.from(container.querySelectorAll('.hover-cursor-img'))
@@ -127,7 +127,21 @@ function detachHoverHandlers(container) {
 }
 onMounted(() => {
   if (root.value) attachHoverHandlers(root.value)
+  nextTick(() => {
+    if (window.refreshAnimations) window.refreshAnimations()
+  })
 })
+
+onUpdated(() => {
+  if (root.value) {
+    detachHoverHandlers(root.value)
+    attachHoverHandlers(root.value)
+  }
+  nextTick(() => {
+    if (window.refreshAnimations) window.refreshAnimations()
+  })
+})
+
 onBeforeUnmount(() => {
   if (root.value) detachHoverHandlers(root.value)
 })

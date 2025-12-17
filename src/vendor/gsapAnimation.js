@@ -558,6 +558,7 @@ gsap.registerPlugin(ScrollTrigger);
         scrollEffectFade();
         drawSvg();
     };
+    window.runAnimations = runAnimations;
     /*== End - Preload ==*/
 
     $(function () {
