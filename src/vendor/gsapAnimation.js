@@ -481,10 +481,17 @@ gsap.registerPlugin(ScrollTrigger);
             document.querySelectorAll('a[href^="#"]').forEach((a) => {
                 a.addEventListener("click", () => {
                     isClickScrolling = true;
-
+                    const href = a.getAttribute("href") || "";
+ 
                     clearTimeout(clickScrollTimer);
                     clickScrollTimer = setTimeout(() => {
                         isClickScrolling = false;
+                        if (href === "#home") {
+                            const sidebar = document.querySelector(".sidebar-user");
+                            gsap.utils.toArray(".wrap").forEach((el) => el.classList.remove("active"));
+                            if (sidebar) sidebar.classList.remove("active");
+                        }
+                        ScrollTrigger.refresh();
                     }, 800);
                 });
             });
