@@ -112,6 +112,8 @@ onBeforeUnmount(() => {
                   <span class="item-text is-visible">Brian</span>
                   <span class="item-text is-hidden">System Analyst</span>
                   <span class="item-text is-hidden">Software Engineer</span>
+                  <span class="item-text is-hidden">Scrum Master</span>
+                  <span class="item-text is-hidden">Project Manager</span>
               </span>
           </h5>
         <p class="introduce text-white-56 letter-space--05 text-body-3">

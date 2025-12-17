@@ -37,10 +37,10 @@ onMounted(() => {
     <BodyBackground />
     <!-- Btn Open Color -->
     <div class="tf-left-bar">
-        <a class="btn-setting-color tf-btn-icon style-2" data-bs-toggle="offcanvas" href="index.html#settingColorMenu"><i class="icon-gear"></i></a>
+        <!-- <a class="btn-setting-color tf-btn-icon style-2" data-bs-toggle="offcanvas" href="index.html#settingColorMenu"><i class="icon-gear"></i></a> -->
     </div>
     <!-- /Btn Open Color -->
-    <OffcanvasColor />
+    <!-- <OffcanvasColor /> -->
 
     <MobileMenu />
 
