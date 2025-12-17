@@ -64,30 +64,46 @@
       Our clients (2015-25©)
     </p>
     <div class="infiniteSlide-brand">
-      <div class="infiniteSlide" data-clone="3">
-        <div class="image-brand">
-          <img class="image-switch" data-dark="./assets/images/brand/brand-1_dark.svg" width="132" height="24"
-               src="./assets/images/brand/brand-1.svg" alt="Image">
-        </div>
-        <div class="image-brand">
-          <img class="image-switch" data-dark="./assets/images/brand/brand-2_dark.svg" width="122" height="24"
-               src="./assets/images/brand/brand-2.svg" alt="Image">
-        </div>
-        <div class="image-brand">
-          <img class="image-switch" data-dark="./assets/images/brand/brand-3_dark.svg" width="125" height="24"
-               src="./assets/images/brand/brand-3.svg" alt="Image">
-        </div>
-        <div class="image-brand">
-          <img class="image-switch" data-dark="./assets/images/brand/brand-4_dark.svg" width="112" height="24"
-               src="./assets/images/brand/brand-4.svg" alt="Image">
+      <div class="infiniteSlide-track">
+        <div class="brand-set" v-for="i in 4" :key="i">
+          <div class="image-brand" v-for="(brand, idx) in brands" :key="idx">
+            <img :src="isDark ? brand.dark : brand.light" :width="brand.w" :height="brand.h" alt="Brand">
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
-import { onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import brand1 from '../assets/images/brand/brand-1.svg'
+import brand1Dark from '../assets/images/brand/brand-1_dark.svg'
+import brand2 from '../assets/images/brand/brand-2.svg'
+import brand2Dark from '../assets/images/brand/brand-2_dark.svg'
+import brand3 from '../assets/images/brand/brand-3.svg'
+import brand3Dark from '../assets/images/brand/brand-3_dark.svg'
+import brand4 from '../assets/images/brand/brand-4.svg'
+import brand4Dark from '../assets/images/brand/brand-4_dark.svg'
+
+const brands = [
+  { light: brand1, dark: brand1Dark, w: 132, h: 24 },
+  { light: brand2, dark: brand2Dark, w: 122, h: 24 },
+  { light: brand3, dark: brand3Dark, w: 125, h: 24 },
+  { light: brand4, dark: brand4Dark, w: 112, h: 24 },
+]
+
+const isDark = ref(false)
+let observer = null
+
 onMounted(() => {
+  // Dark mode observer
+  isDark.value = document.body.classList.contains('dark-mode')
+  observer = new MutationObserver(() => {
+    isDark.value = document.body.classList.contains('dark-mode')
+  })
+  observer.observe(document.body, { attributes: true, attributeFilter: ['class'] })
+
+  // Circular text logic
   const circular = document.getElementById('circularText')
   if (!circular) return
   const text = 'award winning agency - since 2022 -'
@@ -101,5 +117,36 @@ onMounted(() => {
     circular.appendChild(span)
   })
 })
+
+onBeforeUnmount(() => {
+  if (observer) observer.disconnect()
+})
 </script>
+
+<style scoped>
+.infiniteSlide-brand {
+  overflow: hidden;
+  width: 100%;
+}
+.infiniteSlide-track {
+  display: flex;
+  width: max-content;
+  animation: slideMarquee 15s linear infinite;
+}
+.brand-set {
+  display: flex;
+  flex-shrink: 0;
+}
+.image-brand {
+  /* Keep existing styles from global CSS, but ensure flex layout works */
+  flex-shrink: 0;
+}
+@keyframes slideMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-25%); } /* 1/4 because we have 4 sets */
+}
+.infiniteSlide-track:hover {
+  animation-play-state: paused;
+}
+</style>
 

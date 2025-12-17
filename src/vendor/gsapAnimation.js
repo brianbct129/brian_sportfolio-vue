@@ -418,6 +418,7 @@ gsap.registerPlugin(ScrollTrigger);
 
         let triggers = [];
         let isClickScrolling = false;
+        let clickScrollTimer = null;
 
         function scrollActive() {
             const sidebar = document.querySelector(".sidebar-user");
@@ -476,9 +477,6 @@ gsap.registerPlugin(ScrollTrigger);
                 });
                 triggers.push(workTrigger);
             });
-
-            let isClickScrolling = false;
-            let clickScrollTimer = null;
 
             document.querySelectorAll('a[href^="#"]').forEach((a) => {
                 a.addEventListener("click", () => {

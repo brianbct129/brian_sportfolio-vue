@@ -12,7 +12,7 @@
       <li class="wg-tech">
         <div class="tech-infor effectFade fadeUp no-div">
           <div class="tech_image">
-            <img loading="lazy" width="19" height="28" src="./assets/images/section/tech-1.svg" alt="Image">
+            <img loading="lazy" width="19" height="28" src="../assets/images/section/tech-1.svg" alt="Image">
           </div>
           <div class="tech_info">
             <p class="info__name fw-medium text-black-72">Figma</p>
@@ -23,7 +23,7 @@
           <div class="progress-line" data-progress="80">
             <p class="progress-num text-caption">
               <span class="counter">
-                <span class="number" data-speed="1500" data-to="80">10</span>
+                <span class="number" data-speed="1500" data-to="80">80</span>
                 %
               </span>
             </p>
@@ -34,8 +34,7 @@
       <li class="wg-tech">
         <div class="tech-infor effectFade fadeUp no-div">
           <div class="tech_image">
-            <img class="image-switch" data-dark="./assets/images/section/tech-2_dark.svg" width="18" height="28"
-                 src="./assets/images/section/tech-2.svg" alt="Image">
+            <img :src="isDark ? tech2Dark : tech2Light" width="18" height="28" alt="Image">
           </div>
           <div class="tech_info">
             <p class="info__name fw-medium text-black-72">Framer</p>
@@ -46,7 +45,7 @@
           <div class="progress-line" data-progress="90">
             <p class="progress-num text-caption">
               <span class="counter">
-                <span class="number" data-speed="1500" data-to="90">10</span>
+                <span class="number" data-speed="1500" data-to="90">90</span>
                 %
               </span>
             </p>
@@ -57,7 +56,7 @@
       <li class="wg-tech">
         <div class="tech-infor effectFade fadeUp no-div">
           <div class="tech_image">
-            <img loading="lazy" width="29" height="28" src="./assets/images/section/tech-3.svg" alt="Image">
+            <img loading="lazy" width="29" height="28" src="../assets/images/section/tech-3.svg" alt="Image">
           </div>
           <div class="tech_info">
             <p class="info__name fw-medium text-black-72">Adobe Photoshop</p>
@@ -79,6 +78,24 @@
   </div>
 </template>
 <script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import tech2Light from '../assets/images/section/tech-2.svg'
+import tech2Dark from '../assets/images/section/tech-2_dark.svg'
+
+const isDark = ref(false)
+let observer = null
+
+onMounted(() => {
+  isDark.value = document.body.classList.contains('dark-mode')
+  observer = new MutationObserver(() => {
+    isDark.value = document.body.classList.contains('dark-mode')
+  })
+  observer.observe(document.body, { attributes: true, attributeFilter: ['class'] })
+})
+
+onBeforeUnmount(() => {
+  if (observer) observer.disconnect()
+})
 </script>
 <style scoped>
 </style>

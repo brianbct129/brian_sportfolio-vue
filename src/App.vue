@@ -47,27 +47,27 @@ onMounted(() => {
     <SidebarTools />
 
     <div class="overlay-pop"></div>
-  <main id="wrapper">
-    <HeaderTime />
-    <UserSidebar />
-    <div class="main-content">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-7 col-xl-8 ms-auto">
-            <div class="wrap-container">
-              <IntroSection />
-              <AboutSection />
-              <EducationExperience />
-              <WorkGrid />
-              <Services />
-              <TechStack />
-              <Testimonials />
-              <ContactForm />
-              <FooterSection />
+      <main id="wrapper">
+        <HeaderTime />
+        <UserSidebar />
+        <div class="main-content">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-7 col-xl-8 ms-auto">
+                <div class="wrap-container">
+                  <IntroSection />
+                  <AboutSection />
+                  <EducationExperience />
+                  <WorkGrid />
+                  <Services />
+                  <TechStack />
+                  <Testimonials />
+                  <ContactForm />
+                  <FooterSection />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </main>
+      </main>
 </template>
