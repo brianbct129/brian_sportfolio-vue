@@ -482,11 +482,20 @@ gsap.registerPlugin(ScrollTrigger);
                 a.addEventListener("click", () => {
                     isClickScrolling = true;
                     const href = a.getAttribute("href") || "";
+                    const resetSections = new Set([
+                        "#home",
+                        "#about",
+                        "#education",
+                        "#service",
+                        "#tech",
+                        "#testimonial",
+                        "#contact",
+                    ]);
  
                     clearTimeout(clickScrollTimer);
                     clickScrollTimer = setTimeout(() => {
                         isClickScrolling = false;
-                        if (href === "#home") {
+                        if (resetSections.has(href)) {
                             const sidebar = document.querySelector(".sidebar-user");
                             gsap.utils.toArray(".wrap").forEach((el) => el.classList.remove("active"));
                             if (sidebar) sidebar.classList.remove("active");
