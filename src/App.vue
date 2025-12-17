@@ -2,7 +2,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import BodyBackground from './components/BodyBackground.vue'
-import OffcanvasColor from './components/OffcanvasColor.vue'
+// import OffcanvasColor from './components/OffcanvasColor.vue'
 import MobileMenu from './components/MobileMenu.vue'
 import SidebarTools from './components/SidebarTools.vue'
 import HeaderTime from './components/HeaderTime.vue'
@@ -36,9 +36,9 @@ onMounted(() => {
 
     <BodyBackground />
     <!-- Btn Open Color -->
-    <div class="tf-left-bar">
-        <!-- <a class="btn-setting-color tf-btn-icon style-2" data-bs-toggle="offcanvas" href="index.html#settingColorMenu"><i class="icon-gear"></i></a> -->
-    </div>
+    <!-- <div class="tf-left-bar">
+        <a class="btn-setting-color tf-btn-icon style-2" data-bs-toggle="offcanvas" href="index.html#settingColorMenu"><i class="icon-gear"></i></a>
+    </div> -->
     <!-- /Btn Open Color -->
     <!-- <OffcanvasColor /> -->
 
