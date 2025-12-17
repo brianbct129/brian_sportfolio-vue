@@ -9,11 +9,15 @@
         <p class="info_duty text-black-50 text-body-3">UI Designer & No-Code Developer</p>
       </div>
     </div>
-    <h1 class="intro-title letter-space--2 split-text effect-blur-fade">
-      I’m building
-      <span class="active">websites</span><br>
-      <span class="type-2 active">& brands</span>
-      that people remember
+    <h1 class="intro-title letter-space--3 split-text effect-blur-fade">
+      Analyze complexity,
+      <span class="active p-1">Build</span>
+      scalable systems
+      <br>
+      <span class="active p-1">Lead</span>
+      with agility &
+      <span class="type-2 ms-2 p-1 active">Deliver</span>
+      lasting impact
     </h1>
     <div class="intro-item">
       <div class="scribble-wrap">
@@ -106,7 +110,7 @@ onMounted(() => {
   // Circular text logic
   const circular = document.getElementById('circularText')
   if (circular) {
-    const text = 'award winning agency - since 2022 -'
+    const text = 'Learning By Doing - since 2016 -'
     const chars = Array.from(text)
     const degree = 360 / chars.length
     circular.innerHTML = ''

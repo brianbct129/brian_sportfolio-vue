@@ -107,5 +107,3 @@ onBeforeUnmount(() => {
   if (observer) observer.disconnect()
 })
 </script>
-<style scoped>
-</style>
