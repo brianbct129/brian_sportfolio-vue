@@ -52,13 +52,13 @@
     <div class="box-counter effectFade fadeUp no-div">
       <div class="wg-counter">
         <p class="counter h1 d-flex font-2 letter-space--2">
-          <span class="number" data-speed="1000" data-to="10">0</span>+
+          <span class="number" data-speed="1000" data-to="10">12</span>+
         </p>
         <p class="text text-black-56 text-body-3">Year of experience</p>
       </div>
       <div class="wg-counter">
         <p class="counter h1 d-flex font-2 letter-space--2">
-          <span class="number" data-speed="1000" data-to="6">0</span>x
+          <span class="number" data-speed="1000" data-to="6">12</span>x
         </p>
         <p class="text text-black-56 text-body-3">Industry Awards</p>
       </div>

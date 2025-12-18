@@ -535,6 +535,24 @@ gsap.registerPlugin(ScrollTrigger);
             io.observe(svg);
         }
     };
+
+    /* Counter
+    ---------------------------------------------------------- */
+    var counter = () => {
+        if ($(".counter .number").length > 0) {
+            $(".counter .number").each(function () {
+                var $this = $(this);
+                ScrollTrigger.create({
+                    trigger: $this,
+                    start: "top 90%",
+                    once: true,
+                    onEnter: () => {
+                        $this.countTo();
+                    }
+                });
+            });
+        }
+    };
     /*========== End - Scroll Orther Animation ==========*/
 
     /*== Start - Preload ==*/
@@ -573,6 +591,7 @@ gsap.registerPlugin(ScrollTrigger);
         gsapA2();
         scrollEffectFade();
         drawSvg();
+        counter();
     };
     window.runAnimations = runAnimations;
     /*== End - Preload ==*/
