@@ -25,9 +25,16 @@
           </div>
           <template v-for="(content, cIdx) in item.contents" :key="cIdx">
             <p class="timeline-role fw-medium text-black-72" :class="{ 'mt-4': cIdx > 0 }">{{ content.role }}</p>
-            <p class="timeline-desc text-body-3 text-black-56">
-              {{ content.desc }}
-            </p>
+            <template v-if="content.points && content.points.length">
+              <ul class="timeline-desc list-style text-body-3 text-black-56">
+                <li class="my-3" v-for="(pt, pi) in content.points" :key="pi">{{ pt }}</li>
+              </ul>
+            </template>
+            <template v-else>
+              <p class="timeline-desc text-body-3 text-black-56">
+                {{ content.desc }}
+              </p>
+            </template>
           </template>
         </div>
       </div>
@@ -35,17 +42,55 @@
   </div>
 </template>
 <script setup>
-import logo3 from '../assets/images/item/dark_apu.png'
-import logo2 from '../assets/images/item/light_apu.png'
-import edu2 from '../assets/images/item/light_dbs.png'
-import edu2Dark from '../assets/images/item/dark_dbs.png'
-import edu3 from '../assets/images/item/light_binus.png'
-import edu3Dark from '../assets/images/item/dark_binus.png'
+import dark_apu from '../assets/images/item/dark_apu.png'
+import light_apu from '../assets/images/item/light_apu.png'
+import light_dbs from '../assets/images/item/light_dbs.png'
+import dark_dbs from '../assets/images/item/dark_dbs.png'
+import light_binus from '../assets/images/item/light_binus.png'
+import dark_binus from '../assets/images/item/dark_binus.png'
+import light_qf from '../assets/images/item/light_qf.png'
+import dark_qf from '../assets/images/item/dark_qf.png'
+import smartindo from '../assets/images/item/smartindo.png'
 const timelineItems = [
-
+   { 
+    date: '2024 - Present',
+    icon: { light: smartindo, dark: smartindo, w: 200, h: 120 },
+    contents: [
+      {
+        role: 'System Analyst',
+        points: [
+          'As a System Analyst, I support the continuous enhancement of internal systems by bridging business needs with effective technical solutions. I analyze and document business processes, translate them into clear system requirements, and collaborate closely with cross-functional teams to ensure successful implementation.',
+          'I play a key role in improving the user experience of our internal system (Version 2), refining front-end layouts, and reviewing both frontend and backend code to ensure quality, scalability, and alignment with best practices. I also contribute to backend performance by identifying opportunities for database and query optimization to ensure large datasets render efficiently on the frontend.',
+          'Working within an Agile environment, I facilitate sprint ceremonies, break down requirements into actionable tasks, and help maintain development momentum by addressing blockers and monitoring progress. I act as an intermediary between stakeholders, product owners, and developers—ensuring alignment, clarity, and smooth communication throughout the project lifecycle.',
+        ],
+      },
+    ],
+  },
+  { 
+    date: '2024 - Present',
+    icon: { light: dark_qf, dark: light_qf, w: 200, h: 120 },
+    contents: [
+      {
+        role: 'Software Engineer (2023 - Present)',
+        points: [
+          'Engineered and optimized dynamic front-end and server-side components using Node.js, Bootstrap, Vue.js, and Laravel—significantly enhancing responsiveness and reliability.',
+          'Spearheaded collaboration with designers, PMs, and developers to gather requirements and design solutions—reducing delivery time by 20% and aligning with user and technical needs.',
+          'Wrote clean, maintainable code following best practices; optimized apps for speed and scalability; resolved issues to improve performance and reliability.',
+        ],
+      },
+      {
+        role: 'IT Tech Consultant (2023 - 2025)',
+        points: [
+          'Conduct in-depth analysis of clients’ IT systems and business requirements to design and implement solutions that enhance efficiency and support strategic objectives.',
+          'Lead and manage IT projects end-to-end—ensuring on-time, on-budget delivery; coordinate stakeholders, configure systems, and provide training and support.',
+          'Monitor and evaluate solution performance, provide ongoing improvements, and leverage emerging technologies to drive growth and competitiveness.',
+        ],
+      },
+    ],
+  },
   {
     date: '2020 - 2024',
-    icon: { light: logo3, dark: logo2, w: 200, h: 120 },
+    icon: { light: dark_apu, dark: light_apu, w: 200, h: 120 },
     contents: [
       {
         role: 'IT Business Integration Manager (2022 - 2024)',
@@ -61,7 +106,7 @@ const timelineItems = [
   },
   {
     date: '2019 - 2020',
-    icon: { light: edu2, dark: edu2Dark, w: 120, h: 120 },
+    icon: { light: light_dbs, dark: dark_dbs, w: 120, h: 120 },
     contents: [
       {
         role: 'IT Applications Support',
@@ -72,7 +117,7 @@ const timelineItems = [
   },
   {
     date: '2016 - 2020',
-    icon: { light: edu3Dark, dark: edu3, w: 120, h: 120 },
+    icon: { light: dark_binus, dark: light_binus, w: 120, h: 120 },
     contents: [
       {
         role: 'SIS Undergraduate (B.Sc)',
