@@ -1,18 +1,17 @@
 <script setup>
 import { onMounted, onBeforeUnmount, onUpdated, nextTick, ref } from 'vue'
+import { certificates as certificatesData } from '../data/certificates'
 import certif1 from '../assets/images/section/certif/digital_marketing.jpg'
 import certif2 from '../assets/images/section/certif/certif_akuntansi.jpg'
 import certif3 from '../assets/images/section/certif/copywriting.jpg'
 import certif4 from '../assets/images/section/certif/certif_be.png'
 import certif5 from '../assets/images/section/certif/certif_fe.png'
 
-const certificate = [
-  { name: 'Digital Marketing 101 for MSMEs', desc: 'Issued May 2025', year: '2025', img: certif1 },
-  { name: 'Basic Accounting - LPAM', desc: 'Issued Dec 2024', year: '2024', img: certif2 },
-  { name: 'Effective Copywriting for Sales Optimization', desc: 'Issued Aug 2024', year: '2024', img: certif3 },
-  { name: 'Backend Web Development Program', desc: 'Issued Aug 2022', year: '2022', img: certif4 },
-  { name: 'Frontend Web Development Program', desc: 'Issued Mar 2021', year: '2021', img: certif5 },
-]
+const certificateImages = [certif1, certif2, certif3, certif4, certif5]
+const certificate = certificatesData.map((c, idx) => ({
+  ...c,
+  img: certificateImages[idx] || certif1,
+}))
 
 const root = ref(null)
 function attachHoverHandlers(container) {
