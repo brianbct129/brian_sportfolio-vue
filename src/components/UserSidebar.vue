@@ -2,8 +2,8 @@
 import { onMounted, onBeforeUnmount, onUpdated, nextTick, ref } from 'vue'
 import vectorUserLight from '../assets/images/item/vector-user.svg'
 import vectorUserDark from '../assets/images/item/vector-user_dark.svg'
-import logoLight from '../assets/images/logo/logo.svg'
-import logoDark from '../assets/images/logo/logo-2.svg'
+import logoLight from '../assets/images/logo/light.png'
+import logoDark from '../assets/images/logo/dark.png'
 import avatarImg from '../assets/images/avatar/avatar.png'
 
 const root = ref(null)
@@ -86,7 +86,7 @@ onBeforeUnmount(() => {
         </div>
       </div>
       <div class="user-logo d-none d-lg-block">
-        <img loading="lazy" width="40" height="40" :src="isDark ? logoDark : logoLight" alt="Image">
+        <img loading="lazy" width="60" height="60" :src="isDark ? logoDark : logoLight" alt="Image">
       </div>
       <ul class="tf-social-icon-2 user-social d-grid">
         <li><a href="#"><i class="bi bi-whatsapp"></i></a></li>
