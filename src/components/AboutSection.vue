@@ -1,89 +1,19 @@
-<template>
-  <div id="about" class="section-about flat-spacing" ref="root">
-    <div class="sect-tag text-caption fw-medium effectFade fadeUp no-div">
-      <i class="icon icon-user-circle"></i>
-      About
-    </div>
-    <h4 class="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
-      Designing brands and <br class="d-none d-lg-block">
-      websites with clarity, creativity, <br class="d-none d-lg-block">
-      and no-code speed
-    </h4>
-    <p class="s-desc text-black-56 scrolling-effect effectTop">
-      I combine web design, brand identity, and no-code development to help<br class="d-none d-lg-block">
-      businesses move faster while staying true to their personality. <br>
-      <br>
-      Every project is approached with both strategy and style—making sure <br class="d-none d-lg-block">
-      design isn’t just good-looking, but also
-      purposeful and effective.
-    </p>
-    <ul class="award-list">
-      <li class="award-item hover-cursor-img">
-        <div class="left">
-          <h6 class="award_name letter-space--2 text-black-72">Website of the Day</h6>
-          <p class="award_desc text-black-56">CSSDA</p>
-        </div>
-        <h6 class="award_year text-black-72">
-          2019
-        </h6>
-        <div class="award_img hover-image">
-          <img loading="lazy" width="158" height="224" src="../assets/images/section/award-1.jpg" alt="Image">
-        </div>
-      </li>
-      <li class="award-item hover-cursor-img">
-        <div class="left">
-          <h6 class="award_name letter-space--2 text-black-72">Public Awards - UI</h6>
-          <p class="award_desc text-black-56">CSSDA</p>
-        </div>
-        <h6 class="award_year text-black-72">
-          2019
-        </h6>
-        <div class="award_img hover-image">
-          <img loading="lazy" width="158" height="224" src="../assets/images/section/award-2.jpg" alt="Image">
-        </div>
-      </li>
-      <li class="award-item hover-cursor-img">
-        <div class="left">
-          <h6 class="award_name letter-space--2 text-black-72">Public Awards - INN</h6>
-          <p class="award_desc text-black-56">CSSDA</p>
-        </div>
-        <h6 class="award_year text-black-72">
-          2019
-        </h6>
-        <div class="award_img hover-image">
-          <img loading="lazy" width="158" height="224" src="../assets/images/section/award-3.jpg" alt="Image">
-        </div>
-      </li>
-      <li class="award-item hover-cursor-img">
-        <div class="left">
-          <h6 class="award_name letter-space--2 text-black-72">Site of the Month</h6>
-          <p class="award_desc text-black-56">Awwwards</p>
-        </div>
-        <h6 class="award_year text-black-72">
-          2018
-        </h6>
-        <div class="award_img hover-image">
-          <img loading="lazy" width="158" height="224" src="../assets/images/section/award-4.jpg" alt="Image">
-        </div>
-      </li>
-      <li class="award-item hover-cursor-img">
-        <div class="left">
-          <h6 class="award_name letter-space--2 text-black-72">Site of the Day</h6>
-          <p class="award_desc text-black-56">Awwwards</p>
-        </div>
-        <h6 class="award_year text-black-72">
-          2017
-        </h6>
-        <div class="award_img hover-image">
-          <img loading="lazy" width="158" height="224" src="../assets/images/section/award-5.jpg" alt="Image">
-        </div>
-      </li>
-    </ul>
-  </div>
-  <!-- /About -->
-</template>
 <script setup>
 import { onMounted, onBeforeUnmount, onUpdated, nextTick, ref } from 'vue'
+import certif1 from '../assets/images/section/certif/digital_marketing.jpg'
+import certif2 from '../assets/images/section/certif/certif_akuntansi.jpg'
+import certif3 from '../assets/images/section/certif/copywriting.jpg'
+import certif4 from '../assets/images/section/certif/certif_be.png'
+import certif5 from '../assets/images/section/certif/certif_fe.png'
+
+const certificate = [
+  { name: 'Digital Marketing 101 for MSMEs', desc: 'Issued May 2025', year: '2025', img: certif1 },
+  { name: 'Basic Accounting - LPAM', desc: 'Issued Dec 2024', year: '2024', img: certif2 },
+  { name: 'Effective Copywriting for Sales Optimization', desc: 'Issued Aug 2024', year: '2024', img: certif3 },
+  { name: 'Backend Web Development Program', desc: 'Issued Aug 2022', year: '2022', img: certif4 },
+  { name: 'Frontend Web Development Program', desc: 'Issued Mar 2021', year: '2021', img: certif5 },
+]
+
 const root = ref(null)
 function attachHoverHandlers(container) {
   const items = Array.from(container.querySelectorAll('.hover-cursor-img'))
@@ -146,5 +76,41 @@ onBeforeUnmount(() => {
   if (root.value) detachHoverHandlers(root.value)
 })
 </script>
-<style scoped>
-</style>
+<template>
+  <div id="about" class="section-about flat-spacing" ref="root">
+    <div class="sect-tag text-caption fw-medium effectFade fadeUp no-div">
+      <i class="icon icon-user-circle"></i>
+      About
+    </div>
+    <h4 class="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
+      Architecting digital solutions <br class="d-none d-lg-block">
+      through systems analysis, agile leadership, <br class="d-none d-lg-block">
+      and engineering excellence
+    </h4>
+    <p class="s-desc text-black-56 scrolling-effect effectTop">
+      I bridge the gap between business vision and technical execution. By integrating<br class="d-none d-lg-block">
+      systems analysis, scrum mastery, and software engineering, I deliver products <br>
+      <br>
+      that are not just functional, but strategically aligned for growth—ensuring <br class="d-none d-lg-block">
+      every system is built for scalability,
+      performance, and impact.
+    </p>
+    <ul class="award-list">
+      <li class="award-item hover-cursor-img" v-for="(certif, index) in certificate" :key="index">
+        <div class="left">
+          <h6 class="award_name letter-space--2 text-black-72">{{ certif.name }}</h6>
+          <p class="award_desc text-black-56">{{ certif.desc }}</p>
+        </div>
+        <h6 class="award_year text-black-72">
+          {{ certif.year }}
+        </h6>
+        <div class="certif_img hover-image">
+          <img loading="lazy" width="158" height="224" :src="certif.img" alt="Image">
+        </div>
+      </li>
+    </ul>
+  </div>
+  <!-- /About -->
+</template>
+
+

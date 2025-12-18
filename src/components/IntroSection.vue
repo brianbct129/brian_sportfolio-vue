@@ -1,9 +1,9 @@
 <template>
   <div id="home" class="section-intro flat-spacing">
-    <div class="intro-author effectFade fadeUp no-div">
-      <div class="author-image">
-        <img loading="lazy" width="23" height="31" src="./assets/images/avatar/avatar-boy.png" alt="Image">
-      </div>
+  <div class="intro-author effectFade fadeUp no-div">
+    <div class="author-image">
+      <img loading="lazy" width="23" height="31" src="../assets/images/avatar/avatar-boy.png" alt="Image">
+    </div>
       <div class="author-info letter-space--05">
         <p class="info_name text-black">Alexander Isak</p>
         <p class="info_duty text-black-50 text-body-3">UI Designer & No-Code Developer</p>

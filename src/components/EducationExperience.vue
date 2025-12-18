@@ -13,7 +13,7 @@
         <div class="timeline-dot"></div>
         <div class="timeline-content">
           <div class="icon">
-            <img class="image-switch" :data-dark="logo2" loading="lazy" width="32"
+            <img class="image-switch" :data-dark="logo2" :data-light="logo3" loading="lazy" width="32"
                  height="32" :src="logo3" alt="Image">
           </div>
           <p class="timeline-role fw-medium text-black-72">Independent Designer & No-Code Developer</p>
@@ -27,7 +27,7 @@
         <div class="timeline-dot"></div>
         <div class="timeline-content">
           <div class="icon">
-            <img class="image-switch" :data-dark="edu2Dark" width="29" height="32"
+            <img class="image-switch" :data-dark="edu2Dark" :data-light="edu2" width="29" height="32"
                  :src="edu2" alt="Image">
           </div>
           <p class="timeline-role fw-medium text-black-72">Web & Brand Designer at Creative Studio</p>
@@ -37,16 +37,16 @@
         </div>
       </div>
       <div class="timeline-item effectFade fadeUp no-div">
-        <p class="timeline-date text-black-56">2019 - 2021</p>
+        <p class="timeline-date text-black-56">2016 - 2020</p>
         <div class="timeline-dot"></div>
         <div class="timeline-content">
           <div class="icon">
-            <img class="image-switch" width="29" height="32"
-                 :src="edu3" alt="Image">
+            <img class="image-switch" width="180" height="120" :data-dark="edu3" :data-light="edu3Dark"
+                 :src="edu3Dark" alt="Image">
           </div>
-          <p class="timeline-role fw-medium text-black-72">Junior Designer</p>
+          <p class="timeline-role fw-medium text-black-72">SIS Undergraduate (B.Sc)</p>
           <p class="timeline-desc text-body-3 text-black-56">
-            Contributed to web and brand projects, focusing on consistency and clean visuals.
+            Earned a Bachelor’s degree in Information Systems from BINUS University in 2020 with a GPA of 3.14. This program equipped me with a deep understanding of the software development lifecycle, systems analysis, and project management. It was here that I developed the analytical mindset and technical proficiency required to bridge the gap between complex business requirements and scalable software solutions.
           </p>
         </div>
       </div>
@@ -58,7 +58,8 @@ import logo3 from '../assets/images/logo/logo-3.svg'
 import logo2 from '../assets/images/logo/logo-2.svg'
 import edu2 from '../assets/images/item/edu-2.svg'
 import edu2Dark from '../assets/images/item/edu-2_dark.svg'
-import edu3 from '../assets/images/item/edu-3.svg'
+import edu3 from '../assets/images/item/light_binus.png'
+import edu3Dark from '../assets/images/item/dark_binus.png'
 </script>
 <style scoped>
 </style>

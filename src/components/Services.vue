@@ -15,12 +15,12 @@
             <div class="tf-grid-layout sm-col-2">
               <div class="service-image">
                 <div class="wrap_image">
-                  <img width="340" height="206" src="./assets/images/section/service-1.jpg" alt="Image">
+                  <img width="340" height="206" src="../assets/images/section/service-1.jpg" alt="Image">
                 </div>
               </div>
               <div class="service-image">
                 <div class="wrap_image">
-                  <img width="340" height="206" src="./assets/images/section/service-2.jpg" alt="Image">
+                  <img width="340" height="206" src="../assets/images/section/service-2.jpg" alt="Image">
                 </div>
               </div>
             </div>
@@ -46,12 +46,12 @@
             <div class="tf-grid-layout sm-col-2">
               <div class="service-image">
                 <div class="wrap_image">
-                  <img width="340" height="206" src="./assets/images/section/service-3.jpg" alt="Image">
+                  <img width="340" height="206" src="../assets/images/section/service-3.jpg" alt="Image">
                 </div>
               </div>
               <div class="service-image">
                 <div class="wrap_image">
-                  <img width="340" height="206" src="./assets/images/section/service-4.jpg" alt="Image">
+                  <img width="340" height="206" src="../assets/images/section/service-4.jpg" alt="Image">
                 </div>
               </div>
             </div>
@@ -77,12 +77,12 @@
             <div class="tf-grid-layout sm-col-2">
               <div class="service-image">
                 <div class="wrap_image">
-                  <img width="340" height="206" src="./assets/images/section/service-5.jpg" alt="Image">
+                  <img width="340" height="206" src="../assets/images/section/service-5.jpg" alt="Image">
                 </div>
               </div>
               <div class="service-image">
                 <div class="wrap_image">
-                  <img width="340" height="206" src="./assets/images/section/service-6.jpg" alt="Image">
+                  <img width="340" height="206" src="../assets/images/section/service-6.jpg" alt="Image">
                 </div>
               </div>
             </div>

@@ -109,8 +109,7 @@ onBeforeUnmount(() => {
               </span>
           </h5>
         <p class="introduce text-white-56 letter-space--05 text-body-3">
-          I help startups grow with smart design and
-          no-code development, based in Cupertino, CA.
+          I help startups grow by blending systems analysis, agile leadership, and software engineering to turn complexity into scalable products.
         </p>
         <div class="br-line"></div>
         <div class="action-group">
