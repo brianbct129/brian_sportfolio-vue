@@ -50,6 +50,7 @@ import tech3 from '../assets/images/section/tech-3.svg'
 import light_sql from '../assets/images/section/light_sql.png'
 import visual_paradigm from '../assets/images/section/visual_paradigm.png'
 import trello from '../assets/images/section/trello.png'
+import nodejs from '../assets/images/section/nodejs.png'
 
 const isDark = ref(false)
 let observer = null
@@ -99,6 +100,14 @@ const techList = [
     w: 30,
     h: 28,
     progress: 85,
+  },
+   {
+    name: 'Node.JS',
+    desc: 'Server-side JavaScript runtime',
+    src: nodejs,
+    w: 50,
+    h: 28,
+    progress: 75,
   },
   {
     name: 'Flask',
