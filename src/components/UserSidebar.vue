@@ -89,7 +89,7 @@ onBeforeUnmount(() => {
         <img loading="lazy" width="60" height="60" :src="isDark ? logoDark : logoLight" alt="Image">
       </div>
       <ul class="tf-social-icon-2 user-social d-grid">
-        <li><a href="#"><i class="bi bi-whatsapp"></i></a></li>
+        <li><a href="#"><i class="bi bi-github"></i></a></li>
         <li><a href="#"><i class="icon icon-linkin"></i></a></li>
         <li><a href="#"><i class="bi bi-instagram"></i></a></li>
       </ul>
