@@ -63,4 +63,11 @@ window.refreshAnimations = () => {
   }
 }
 
-new MutationObserver(() => applyImageSwitch()).observe(document.body, { attributes: true, attributeFilter: ['class'] })
+new MutationObserver(() => {
+  applyImageSwitch()
+  if (window.refreshAnimations) {
+    setTimeout(() => {
+      window.refreshAnimations()
+    }, 100)
+  }
+}).observe(document.body, { attributes: true, attributeFilter: ['class'] })

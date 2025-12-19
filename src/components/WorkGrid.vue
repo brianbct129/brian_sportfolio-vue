@@ -162,6 +162,19 @@
   </div>
 </template>
 <script setup>
+import { onMounted, onUpdated, nextTick } from 'vue'
+
+onMounted(() => {
+  nextTick(() => {
+    if (window.refreshAnimations) window.refreshAnimations()
+  })
+})
+
+onUpdated(() => {
+  nextTick(() => {
+    if (window.refreshAnimations) window.refreshAnimations()
+  })
+})
 </script>
 <style scoped>
 </style>

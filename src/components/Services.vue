@@ -5,7 +5,7 @@
       Services
     </div>
     <div id="accordion-service" class="service-accordion">
-      <div class="service-accordion_item scrolling-effect effectBottom" role="presentation">
+      <div class="service-accordion_item effectFade fadeUp no-div" role="presentation">
         <div class="accordion-action" data-bs-target="#service-1" role="button" data-bs-toggle="collapse" aria-controls="service-1" aria-expanded="true">
           <h4 class="text letter-space--2 text-black-72">Web Design</h4>
           <div class="ic-wrap"><span class="ic-accordion-custom"></span></div>
@@ -35,8 +35,8 @@
           </div>
         </div>
       </div>
-      <div class="br-line scrolling-effect effectBottom"></div>
-      <div class="service-accordion_item scrolling-effect effectBottom" role="presentation">
+      <div class="br-line effectFade fadeUp no-div"></div>
+      <div class="service-accordion_item effectFade fadeUp no-div" role="presentation">
         <div class="accordion-action collapsed" data-bs-target="#service-2" role="button" data-bs-toggle="collapse" aria-controls="service-2" aria-expanded="false">
           <h4 class="text letter-space--2 text-black-72">No-Code Development</h4>
           <div class="ic-wrap"><span class="ic-accordion-custom"></span></div>
@@ -66,8 +66,8 @@
           </div>
         </div>
       </div>
-      <div class="br-line scrolling-effect effectBottom"></div>
-      <div class="service-accordion_item scrolling-effect effectBottom" role="presentation">
+      <div class="br-line effectFade fadeUp no-div"></div>
+      <div class="service-accordion_item effectFade fadeUp no-div" role="presentation">
         <div class="accordion-action collapsed" data-bs-target="#service-3" role="button" data-bs-toggle="collapse" aria-controls="service-3" aria-expanded="false">
           <h4 class="text letter-space--2 text-black-72">Brand Identity</h4>
           <div class="ic-wrap"><span class="ic-accordion-custom"></span></div>
@@ -101,6 +101,19 @@
   </div>
 </template>
 <script setup>
+import { onMounted, onUpdated, nextTick } from 'vue'
+
+onMounted(() => {
+  nextTick(() => {
+    if (window.refreshAnimations) window.refreshAnimations()
+  })
+})
+
+onUpdated(() => {
+  nextTick(() => {
+    if (window.refreshAnimations) window.refreshAnimations()
+  })
+})
 </script>
 <style scoped>
 </style>
