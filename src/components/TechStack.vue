@@ -43,9 +43,7 @@
   </div>
 </template>
 <script setup>
-  import { ref, onMounted, onBeforeUnmount, onUpdated, nextTick } from 'vue'
-import tech2Light from '../assets/images/section/tech-2.svg'
-import tech2Dark from '../assets/images/section/tech-2_dark.svg'
+import { ref, onMounted, onBeforeUnmount, onUpdated, nextTick } from 'vue'
 import tech3 from '../assets/images/section/tech-3.svg'
 import light_sql from '../assets/images/section/light_sql.png'
 import visual_paradigm from '../assets/images/section/visual_paradigm.png'
