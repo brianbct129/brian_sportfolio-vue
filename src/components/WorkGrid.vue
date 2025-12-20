@@ -32,22 +32,22 @@
                       <p class="text-body-1 text-white-72">{{ work.year || '2024' }}</p>
                     </div>
                     <div class="box-high">
-                      <p class="text-body-3 text-white-56">Role</p>
-                      <p class="text-body-1 text-white-72">{{ work.role || 'Lead Product Designer' }}</p>
+                      <p class="text-body-3 text-white-56">Kota</p>
+                      <p class="text-body-1 text-white-72">{{ work.kota || 'City' }}</p>
                     </div>
                   </div>
                   <div class="w-tag-list">
-                    <div class="tag" v-for="(tag, tIndex) in (Array.isArray(work.tags) ? work.tags : ['Brand', 'Website'])" :key="tIndex">
-                        <span class="text-body-3 fw-medium text-white-72">{{ tag }}</span>
+                    <div class="tag">
+                        <span class="text-body-3 fw-medium text-white-72">{{ work.category_name }}</span>
                     </div>
                   </div>
                 </div>
                 <div class="content-bottom">
                   <div class="br-line"></div>
                   <div class="group-action">
-                    <a href="#" class="tf-btn-action style-white">
+                    <a :href="work.link" target="_blank" class="tf-btn-action style-white">
                       <span class="ic-wrap"><i class="icon icon-arrow-right-top"></i></span>
-                      <span class="text text-body-3 letter-space--05 fw-medium">Let’s talk</span>
+                      <span class="text text-body-3 letter-space--05 fw-medium">Link</span>
                       <span class="ic-wrap"><i class="icon icon-arrow-right-top"></i></span>
                     </a>
                     <p class="text-white-40"><span class="text-white-72">{{ String(index + 1).padStart(2, '0') }}</span> / {{ String(works.length).padStart(2, '0') }}</p>
