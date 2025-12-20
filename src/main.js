@@ -56,9 +56,7 @@ window.applyImageSwitch = applyImageSwitch
 
 window.refreshAnimations = () => {
   if (window.ScrollTrigger) {
-    // Pass true to kill() to revert changes (remove pin-spacers, inline styles)
-    // to prevent nested pinning or layout corruption on re-initialization
-    window.ScrollTrigger.getAll().forEach(t => t.kill(true))
+    window.ScrollTrigger.getAll().forEach(t => t.kill())
   }
   if (window.runAnimations) {
     window.runAnimations()
@@ -67,10 +65,9 @@ window.refreshAnimations = () => {
 
 new MutationObserver(() => {
   applyImageSwitch()
-  // Avoid refreshing animations on dark mode toggle to prevent ScrollTrigger pinning issues
-  // if (window.refreshAnimations) {
-  //   setTimeout(() => {
-  //     window.refreshAnimations()
-  //   }, 100)
-  // }
+  if (window.refreshAnimations) {
+    setTimeout(() => {
+      window.refreshAnimations()
+    }, 100)
+  }
 }).observe(document.body, { attributes: true, attributeFilter: ['class'] })

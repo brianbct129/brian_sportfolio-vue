@@ -10,17 +10,17 @@
       <div v-else v-for="(work, index) in works" :key="work.id || index" class="sticky-item">
         <div class="wg-work">
           <div class="work-image">
-            <img @load="handleImageLoad" loading="lazy" width="900" height="427" :src="work.images1" :alt="work.title || 'Work Image'">
+            <img loading="lazy" width="900" height="427" :src="work.images1" :alt="work.title || 'Work Image'">
           </div>
           <div class="wrap">
             <div class="work-content">
               <div class="w-image">
-                <img @load="handleImageLoad" loading="lazy" width="468" height="856" :src="work.images1" :alt="work.title || 'Work Image'">
+                <img loading="lazy" width="468" height="856" :src="work.images1" :alt="work.title || 'Work Image'">
               </div>
               <div class="content">
                 <div class="content-top">
                   <div class="w-logo">
-                    <img loading="lazy" width="40" height="40" :src="isDark ? logoDark : logoLight" alt="Image">
+                    <img loading="lazy" width="40" height="40" :src="logoDark" alt="Image">
                   </div>
                   <h4 class="w-title letter-space--2 text-white-72">{{ work.title || 'Project Name' }}</h4>
                   <p class="w-desc text-white-56 text-body-3">
@@ -62,122 +62,16 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, onUpdated, onBeforeUnmount, nextTick } from 'vue'
+import { ref, onMounted, onUpdated, nextTick } from 'vue'
 import logoDark from '../assets/images/logo/dark.png'
-import logoLight from '../assets/images/logo/light.png'
-
 const works = ref([])
 const loading = ref(true)
 const error = ref(null)
-const isDark = ref(false)
-let observer = null
-let refreshTimeout = null
-let isRefreshing = false
-
-// Only refresh calculations (for image loads/resize)
-const refreshCalculations = () => {
-  if (refreshTimeout) clearTimeout(refreshTimeout)
-  refreshTimeout = setTimeout(() => {
-    requestAnimationFrame(() => {
-      if (window.ScrollTrigger) {
-        window.ScrollTrigger.refresh()
-      }
-    })
-  }, 20)
-}
-
-// Full re-initialization (for data changes/mount)
-const initTriggers = () => {
-  if (refreshTimeout) clearTimeout(refreshTimeout)
-  refreshTimeout = setTimeout(() => {
-    requestAnimationFrame(() => {
-      if (window.ScrollTrigger) {
-        window.ScrollTrigger.refresh()
-      }
-      initScrollTriggers()
-    })
-  }, 200)
-}
-
-// Logic ported from gsapAnimation.js (service function)
-const initScrollTriggers = () => {
-  if (!window.ScrollTrigger) return
-
-  // Select elements within the component and related sidebar
-  const sidebar = document.querySelector(".sidebar-user")
-  const worksItems = document.querySelectorAll(".sticky-item")
-
-  if (!sidebar || !worksItems.length) return
-
-  // Clean up existing triggers on these elements to prevent duplication
-  const elements = [sidebar, ...Array.from(worksItems)]
-  window.ScrollTrigger.getAll().forEach(t => {
-      if (elements.includes(t.trigger) || elements.includes(t.pin)) {
-          t.kill(true)
-      }
-  })
-
-  let isClickScrolling = false
-  let clickScrollTimer = null
-
-  // Handle anchor clicks to prevent active class jumping
-  document.querySelectorAll('a[href^="#"]').forEach((a) => {
-    a.addEventListener("click", () => {
-      isClickScrolling = true
-      if (clickScrollTimer) clearTimeout(clickScrollTimer)
-      clickScrollTimer = setTimeout(() => {
-        isClickScrolling = false
-      }, 800)
-    })
-  })
-
-  // 1. Sidebar Active Trigger
-  window.ScrollTrigger.create({
-    trigger: worksItems[0],
-    start: "top 132px",
-    endTrigger: worksItems[worksItems.length - 1],
-    end: "bottom 68px",
-    onEnter: () => !isClickScrolling && sidebar.classList.add("active"),
-    onLeave: () => !isClickScrolling && sidebar.classList.remove("active"),
-    onEnterBack: () => !isClickScrolling && sidebar.classList.add("active"),
-    onLeaveBack: () => !isClickScrolling && sidebar.classList.remove("active"),
-    invalidateOnRefresh: true,
-  })
-
-  // 2. Work Items (.wrap) Active Trigger
-  worksItems.forEach((work) => {
-    const wrap = work.querySelector(".wrap")
-    if (!wrap) return
-
-    window.ScrollTrigger.create({
-      trigger: work,
-      start: "top 132px",
-      end: "bottom 68px",
-      onEnter: () => {
-        if (isClickScrolling) return
-        document.querySelectorAll(".wg-work .wrap").forEach((el) => el.classList.remove("active"))
-        wrap.classList.add("active")
-      },
-      onEnterBack: () => {
-        if (isClickScrolling) return
-        document.querySelectorAll(".wg-work .wrap").forEach((el) => el.classList.remove("active"))
-        wrap.classList.add("active")
-      },
-      onLeave: () => {
-        if (isClickScrolling) return
-        wrap.classList.remove("active")
-      },
-      onLeaveBack: () => {
-        if (isClickScrolling) return
-        wrap.classList.remove("active")
-      },
-      invalidateOnRefresh: true,
-    })
-  })
-}
 
 const handleImageLoad = () => {
-  refreshCalculations()
+  if (window.ScrollTrigger) {
+    window.ScrollTrigger.refresh()
+  }
 }
 
 const fetchData = async () => {
@@ -188,64 +82,31 @@ const fetchData = async () => {
         throw new Error(`HTTP error! status: ${response.status}`)
     }
     const data = await response.json()
+    // Handle likely API response structures (array or object with data property)
     works.value = Array.isArray(data) ? data : (data.data || [])
   } catch (e) {
     console.error("Failed to fetch portfolios:", e)
     error.value = e.message
   } finally {
     loading.value = false
+    // Trigger animation refresh after DOM update
     nextTick(() => {
-        initTriggers()
+        if (window.refreshAnimations) window.refreshAnimations()
     })
   }
 }
 
 onMounted(() => {
   fetchData()
-  
-  // Dark mode detection
-  isDark.value = document.body.classList.contains('dark-mode')
-  observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (mutation.attributeName === 'class') {
-        const newIsDark = document.body.classList.contains('dark-mode')
-        if (isDark.value !== newIsDark) {
-          isDark.value = newIsDark
-          // No need to refresh ScrollTrigger for color changes
-        }
-      }
-    })
-  })
-  observer.observe(document.body, { attributes: true })
-  
   nextTick(() => {
-    initTriggers()
+    if (window.refreshAnimations) window.refreshAnimations()
   })
 })
 
 onUpdated(() => {
-  // We only need to re-init if the DOM structure changed significantly (e.g. works list updated)
-  // If just a class changed, we don't need to kill all triggers.
-  // But onUpdated fires for any reactive change. 
-  // Let's rely on explicit calls in fetchData and nextTick, 
-  // or only use refreshCalculations here if needed.
-  // nextTick(() => refreshCalculations()) 
-})
-
-onBeforeUnmount(() => {
-  if (observer) observer.disconnect()
-  if (refreshTimeout) clearTimeout(refreshTimeout)
-  // Clean up ScrollTriggers created by this component
-  if (window.ScrollTrigger) {
-    const sidebar = document.querySelector(".sidebar-user")
-    const worksItems = document.querySelectorAll(".sticky-item")
-    const elements = [sidebar, ...Array.from(worksItems)]
-    window.ScrollTrigger.getAll().forEach(t => {
-        if (elements.includes(t.trigger)) {
-            t.kill(true)
-        }
-    })
-  }
+  nextTick(() => {
+    if (window.refreshAnimations) window.refreshAnimations()
+  })
 })
 </script>
 <style scoped>

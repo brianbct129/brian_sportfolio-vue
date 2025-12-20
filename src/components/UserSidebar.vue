@@ -52,11 +52,15 @@ onMounted(() => {
     next.classList.add('is-visible')
     idx = (idx + 1) % items.length
   }, 2500)
-  // Removed refreshAnimations call to prevent layout thrashing and stuck elements
+  nextTick(() => {
+    if (window.refreshAnimations) window.refreshAnimations()
+  })
 })
 
 onUpdated(() => {
-  // Removed refreshAnimations call to prevent layout thrashing and stuck elements
+  nextTick(() => {
+    if (window.refreshAnimations) window.refreshAnimations()
+  })
 })
 
 onBeforeUnmount(() => {
