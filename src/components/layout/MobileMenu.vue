@@ -8,51 +8,51 @@
     <div class="nav-mobile-list" :class="{ open: isOpen }">
       <ul class="nav-mobile-item">
         <li class="nav-item">
-          <a href="#home" class="item-link scroll-link" @click="closeMenu">
+          <a href="#home" class="item-link scroll-link" :class="{ active: activeSection === 'home' }" @click="closeMenu">
             <i class="icon icon-home"></i>
             <p class="tool-tip text-caption">Home</p>
           </a>
         </li>
         <li class="br-line"></li>
         <li class="nav-item">
-          <a href="#about" class="item-link scroll-link" @click="closeMenu">
+          <a href="#about" class="item-link scroll-link" :class="{ active: activeSection === 'about' }" @click="closeMenu">
             <i class="icon icon-user-circle"></i>
             <p class="tool-tip text-caption">About</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="#education" class="item-link scroll-link" @click="closeMenu">
+          <a href="#education" class="item-link scroll-link" :class="{ active: activeSection === 'education' }" @click="closeMenu">
             <i class="icon icon-edu"></i>
             <p class="tool-tip text-caption">Education & Experience</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="#work" class="item-link scroll-link" @click="closeMenu">
+          <a href="#work" class="item-link scroll-link" :class="{ active: activeSection === 'work' }" @click="closeMenu">
             <i class="icon icon-high-light"></i>
             <p class="tool-tip text-caption">Work</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="#service" class="item-link scroll-link" @click="closeMenu">
+          <a href="#service" class="item-link scroll-link" :class="{ active: activeSection === 'service' }" @click="closeMenu">
             <i class="icon icon-service"></i>
             <p class="tool-tip text-caption">Services</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="#tech" class="item-link scroll-link" @click="closeMenu">
+          <a href="#tech" class="item-link scroll-link" :class="{ active: activeSection === 'tech' }" @click="closeMenu">
             <i class="icon icon-tech-stack"></i>
             <p class="tool-tip text-caption">Tech</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="#testimonial" class="item-link scroll-link" @click="closeMenu">
+          <a href="#testimonial" class="item-link scroll-link" :class="{ active: activeSection === 'testimonial' }" @click="closeMenu">
             <i class="icon icon-tes"></i>
             <p class="tool-tip text-caption">Testimonials</p>
           </a>
         </li>
         <li class="br-line"></li>
         <li class="nav-item">
-          <a href="#contact" class="item-link scroll-link" @click="closeMenu">
+          <a href="#contact" class="item-link scroll-link" :class="{ active: activeSection === 'contact' }" @click="closeMenu">
             <i class="icon icon-send"></i>
             <p class="tool-tip text-caption">Contact</p>
           </a>
@@ -63,7 +63,10 @@
 </template>
 <script setup>
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
+import { useScrollSpy } from '../../composables/useScrollSpy'
+
 const isOpen = ref(false)
+const { activeSection } = useScrollSpy()
 let overlayEl = null
 const toggleMenu = () => { isOpen.value = !isOpen.value }
 const closeMenu = () => { isOpen.value = false }
