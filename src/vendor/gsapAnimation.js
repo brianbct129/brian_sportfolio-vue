@@ -594,10 +594,13 @@ gsap.registerPlugin(ScrollTrigger);
         counter();
     };
     window.runAnimations = runAnimations;
+    window.hidePreloader = loaderV2;
     /*== End - Preload ==*/
 
     $(function () {
         runAnimations();
-        loaderV2();
+        if (window.isDataLoaded) {
+            loaderV2();
+        }
     });
 })(jQuery);

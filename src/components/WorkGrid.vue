@@ -20,7 +20,7 @@
               <div class="content">
                 <div class="content-top">
                   <div class="w-logo">
-                    <img loading="lazy" width="40" height="40" :src="logoDark" alt="Image">
+                    <img class="image-switch" loading="lazy" width="40" height="40" :src="logoLight" :data-light="logoLight" :data-dark="logoDark" alt="Image">
                   </div>
                   <h4 class="w-title letter-space--2 text-white-72">{{ work.title || 'Project Name' }}</h4>
                   <p class="w-desc text-white-56 text-body-3">
@@ -64,6 +64,7 @@
 <script setup>
 import { ref, onMounted, onUpdated, nextTick } from 'vue'
 import logoDark from '../assets/images/logo/dark.png'
+import logoLight from '../assets/images/logo/light.png'
 const works = ref([])
 const loading = ref(true)
 const error = ref(null)
@@ -89,9 +90,15 @@ const fetchData = async () => {
     error.value = e.message
   } finally {
     loading.value = false
+    // Signal that data is loaded
+    window.isDataLoaded = true
+    // Try to hide preloader if the function is already available
+    if (window.hidePreloader) window.hidePreloader()
+
     // Trigger animation refresh after DOM update
     nextTick(() => {
         if (window.refreshAnimations) window.refreshAnimations()
+        if (window.applyImageSwitch) window.applyImageSwitch()
     })
   }
 }
