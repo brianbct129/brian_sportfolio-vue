@@ -5,39 +5,41 @@
       Work Highlights
     </div>
     <div class="work-list element-sticky">
-      <div class="sticky-item">
+      <div v-if="loading" class="text-center text-white-72">Loading works...</div>
+      <div v-else-if="error" class="text-center text-danger">Error loading works: {{ error }}</div>
+      <div v-else v-for="(work, index) in works" :key="work.id || index" class="sticky-item">
         <div class="wg-work">
           <div class="work-image">
-            <img loading="lazy" width="700" height="427" src="../assets/images/section/work-1.jpg" alt="Image">
+            <img loading="lazy" width="900" height="427" :src="work.images1" :alt="work.title || 'Work Image'">
           </div>
           <div class="wrap">
             <div class="work-content">
               <div class="w-image">
-                <img loading="lazy" width="468" height="856" src="../assets/images/section/work-1.jpg" alt="Image">
+                <img loading="lazy" width="468" height="856" :src="work.images1" :alt="work.title || 'Work Image'">
               </div>
               <div class="content">
                 <div class="content-top">
                   <div class="w-logo">
-                    <img loading="lazy" width="40" height="40" src="../assets/images/logo/logo-2.svg" alt="Image">
+                    <img loading="lazy" width="40" height="40" :src="logoDark" alt="Image">
                   </div>
-                  <h4 class="w-title letter-space--2 text-white-72">Drone</h4>
+                  <h4 class="w-title letter-space--2 text-white-72">{{ work.title || 'Project Name' }}</h4>
                   <p class="w-desc text-white-56 text-body-3">
-                    Brand and website for a drone startup, blending futuristic visuals with trust-driven design
+                    {{ work.description_proyek || 'No description available.' }}
                   </p>
                   <div class="w-highlight">
                     <div class="box-high">
                       <p class="text-body-3 text-white-56">Year</p>
-                      <p class="text-body-1 text-white-72">2024</p>
+                      <p class="text-body-1 text-white-72">{{ work.year || '2024' }}</p>
                     </div>
                     <div class="box-high">
                       <p class="text-body-3 text-white-56">Role</p>
-                      <p class="text-body-1 text-white-72">Lead Product Designer</p>
+                      <p class="text-body-1 text-white-72">{{ work.role || 'Lead Product Designer' }}</p>
                     </div>
                   </div>
                   <div class="w-tag-list">
-                    <div class="tag"><span class="text-body-3 fw-medium text-white-72">Brand</span></div>
-                    <div class="tag"><span class="text-body-3 fw-medium text-white-72">Website</span></div>
-                    <div class="tag"><span class="text-body-3 fw-medium text-white-72">Webflow</span></div>
+                    <div class="tag" v-for="(tag, tIndex) in (Array.isArray(work.tags) ? work.tags : ['Brand', 'Website'])" :key="tIndex">
+                        <span class="text-body-3 fw-medium text-white-72">{{ tag }}</span>
+                    </div>
                   </div>
                 </div>
                 <div class="content-bottom">
@@ -48,109 +50,7 @@
                       <span class="text text-body-3 letter-space--05 fw-medium">Let’s talk</span>
                       <span class="ic-wrap"><i class="icon icon-arrow-right-top"></i></span>
                     </a>
-                    <p class="text-white-40"><span class="text-white-72">01</span> / 03</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="sticky-item">
-        <div class="wg-work">
-          <div class="work-image">
-            <img loading="lazy" width="700" height="427" src="../assets/images/section/work-2.jpg" alt="Image">
-          </div>
-          <div class="wrap">
-            <div class="work-content">
-              <div class="w-image">
-                <img loading="lazy" width="468" height="856" src="../assets/images/section/work-2.jpg" alt="Image">
-              </div>
-              <div class="content">
-                <div class="content-top">
-                  <div class="w-logo">
-                    <img loading="lazy" width="40" height="40" src="../assets/images/logo/logo-2.svg" alt="Image">
-                  </div>
-                  <h4 class="w-title letter-space--2 text-white-72">Durotan</h4>
-                  <p class="w-desc text-white-56 text-body-3">
-                    Minimal e-commerce identity and website crafted to highlight timeless fashion essentials
-                  </p>
-                  <div class="w-highlight">
-                    <div class="box-high">
-                      <p class="text-body-3 text-white-56">Year</p>
-                      <p class="text-body-1 text-white-72">2024</p>
-                    </div>
-                    <div class="box-high">
-                      <p class="text-body-3 text-white-56">Role</p>
-                      <p class="text-body-1 text-white-72">Lead Product Designer</p>
-                    </div>
-                  </div>
-                  <div class="w-tag-list">
-                    <div class="tag"><span class="text-body-3 fw-medium text-white-72">Brand</span></div>
-                    <div class="tag"><span class="text-body-3 fw-medium text-white-72">Website</span></div>
-                    <div class="tag"><span class="text-body-3 fw-medium text-white-72">Webflow</span></div>
-                  </div>
-                </div>
-                <div class="content-bottom">
-                  <div class="br-line"></div>
-                  <div class="group-action">
-                    <a href="#" class="tf-btn-action style-white">
-                      <span class="ic-wrap"><i class="icon icon-arrow-right-top"></i></span>
-                      <span class="text text-body-3 letter-space--05 fw-medium">Let’s talk</span>
-                      <span class="ic-wrap"><i class="icon icon-arrow-right-top"></i></span>
-                    </a>
-                    <p class="text-white-40"><span class="text-white-72">02</span> / 03</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="sticky-item">
-        <div class="wg-work">
-          <div class="work-image">
-            <img loading="lazy" width="700" height="427" src="../assets/images/section/work-3.jpg" alt="Image">
-          </div>
-          <div class="wrap">
-            <div class="work-content">
-              <div class="w-image">
-                <img loading="lazy" width="468" height="856" src="../assets/images/section/work-3.jpg" alt="Image">
-              </div>
-              <div class="content">
-                <div class="content-top">
-                  <div class="w-logo">
-                    <img loading="lazy" width="40" height="40" src="../assets/images/logo/logo-2.svg" alt="Image">
-                  </div>
-                  <h4 class="w-title letter-space--2 text-white-72">Nike Campaign</h4>
-                  <p class="w-desc text-white-56 text-body-3">
-                    Landing experience for Nike’s urban campaign, built to inspire movement and brand loyalty
-                  </p>
-                  <div class="w-highlight">
-                    <div class="box-high">
-                      <p class="text-body-3 text-white-56">Year</p>
-                      <p class="text-body-1 text-white-72">2024</p>
-                    </div>
-                    <div class="box-high">
-                      <p class="text-body-3 text-white-56">Role</p>
-                      <p class="text-body-1 text-white-72">Lead Product Designer</p>
-                    </div>
-                  </div>
-                  <div class="w-tag-list">
-                    <div class="tag"><span class="text-body-3 fw-medium text-white-72">Brand</span></div>
-                    <div class="tag"><span class="text-body-3 fw-medium text-white-72">Website</span></div>
-                    <div class="tag"><span class="text-body-3 fw-medium text-white-72">Webflow</span></div>
-                  </div>
-                </div>
-                <div class="content-bottom">
-                  <div class="br-line"></div>
-                  <div class="group-action">
-                    <a href="#" class="tf-btn-action style-white">
-                      <span class="ic-wrap"><i class="icon icon-arrow-right-top"></i></span>
-                      <span class="text text-body-3 letter-space--05 fw-medium">Let’s talk</span>
-                      <span class="ic-wrap"><i class="icon icon-arrow-right-top"></i></span>
-                    </a>
-                    <p class="text-white-40"><span class="text-white-72">03</span> / 03</p>
+                    <p class="text-white-40"><span class="text-white-72">{{ String(index + 1).padStart(2, '0') }}</span> / {{ String(works.length).padStart(2, '0') }}</p>
                   </div>
                 </div>
               </div>
@@ -162,9 +62,42 @@
   </div>
 </template>
 <script setup>
-import { onMounted, onUpdated, nextTick } from 'vue'
+import { ref, onMounted, onUpdated, nextTick } from 'vue'
+import logoDark from '../assets/images/logo/dark.png'
+const works = ref([])
+const loading = ref(true)
+const error = ref(null)
+
+const handleImageLoad = () => {
+  if (window.ScrollTrigger) {
+    window.ScrollTrigger.refresh()
+  }
+}
+
+const fetchData = async () => {
+  try {
+    const apiKey = import.meta.env.VITE_API_KEY
+    const response = await fetch(`https://quantumitco.com/api/portfolios?api_key=${apiKey}`)
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    const data = await response.json()
+    // Handle likely API response structures (array or object with data property)
+    works.value = Array.isArray(data) ? data : (data.data || [])
+  } catch (e) {
+    console.error("Failed to fetch portfolios:", e)
+    error.value = e.message
+  } finally {
+    loading.value = false
+    // Trigger animation refresh after DOM update
+    nextTick(() => {
+        if (window.refreshAnimations) window.refreshAnimations()
+    })
+  }
+}
 
 onMounted(() => {
+  fetchData()
   nextTick(() => {
     if (window.refreshAnimations) window.refreshAnimations()
   })

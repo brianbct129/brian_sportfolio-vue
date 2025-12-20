@@ -5667,7 +5667,7 @@ button.animate-btn::after,
     top: 16px;
     left: 16px;
     bottom: 16px;
-    max-width: 400px;
+    max-width: 600px;
     width: 100%;
     overflow: hidden;
     display: flex;
@@ -5685,6 +5685,7 @@ button.animate-btn::after,
     transform: translateY(0px);
     opacity: 1;
     visibility: visible;
+    min-width: 600px;
   }
   .wg-work .work-content {
     padding: 6px;
@@ -5698,7 +5699,7 @@ button.animate-btn::after,
 }
 @media (min-width: 1440px) {
   .wg-work .wrap {
-    max-width: 480px;
+    max-width: 600px;
   }
 }
 @media (min-width: 1600px) {
