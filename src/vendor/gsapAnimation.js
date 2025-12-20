@@ -434,7 +434,7 @@ gsap.registerPlugin(ScrollTrigger);
 
             const sidebarTrigger = ScrollTrigger.create({
                 trigger: firstWork,
-                start: "top 132px",
+                start: "top 142px",
                 endTrigger: lastWork,
                 end: "bottom 68px",
                 onEnter: () => !isClickScrolling && sidebar.classList.add("active"),
@@ -452,7 +452,7 @@ gsap.registerPlugin(ScrollTrigger);
 
                 const workTrigger = ScrollTrigger.create({
                     trigger: work,
-                    start: "top 132px",
+                    start: "top 142px",
                     end: "bottom 68px",
                     onEnter: () => {
                         if (isClickScrolling) return;
