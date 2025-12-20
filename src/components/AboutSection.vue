@@ -81,12 +81,12 @@ onBeforeUnmount(() => {
       <i class="icon icon-user-circle"></i>
       About
     </div>
-    <h4 class="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
+    <h4 class="s-title letter-space--2 text-black-72">
       Architecting digital solutions <br class="d-none d-lg-block">
       through systems analysis, agile leadership, <br class="d-none d-lg-block">
       and engineering excellence
     </h4>
-    <p class="s-desc text-black-56 scrolling-effect effectTop">
+    <p class="s-desc text-black-56">
       I bridge the gap between business vision and technical execution. By integrating<br class="d-none d-lg-block">
       systems analysis, scrum mastery, and software engineering, I deliver products <br>
       <br>
