@@ -49,12 +49,12 @@
 </template>
 <script setup>
 import { onMounted, onUpdated, nextTick } from 'vue'
-import service1 from '../assets/images/section/service-1.jpg'
-import service2 from '../assets/images/section/service-2.jpg'
-import service3 from '../assets/images/section/service-3.jpg'
-import service4 from '../assets/images/section/service-4.jpg'
-import service5 from '../assets/images/section/service-5.jpg'
-import service6 from '../assets/images/section/service-6.jpg'
+const service1 = 'https://wp-media.cloudairy.com/template/wp-content/uploads/2025/02/01053446/Kubernetes-Architecture-Thumbnail-3.png'
+const service2 = 'https://img.freepik.com/free-vector/infographic-dashboard-user-panel_52683-30026.jpg?semt=ais_hybrid&w=740&q=80'
+const service3 = 'https://img.freepik.com/free-photo/business-people-are-brainstorming_53876-137640.jpg?semt=ais_hybrid&w=740&q=80'
+const service4 = 'https://wallpapers.com/images/featured/project-management-wfbuewoquiigeuht.jpg'
+const service5 = 'https://i.pinimg.com/1200x/51/01/63/510163345be6f7368beb0c4c9246ed6c.jpg'
+const service6 = 'https://assets.bosch.com/media/global/research/research_fields/digitalization_and_connectivity/software_development/software-development-source-code.jpg'
 
 const services = [
   {
