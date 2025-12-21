@@ -77,8 +77,18 @@ const handleImageLoad = () => {
 
 const fetchData = async () => {
   try {
-    const apiKey = import.meta.env.VITE_API_KEY
-    const response = await fetch(`https://quantumitco.com/api/portfolios?api_key=${apiKey}`)
+    // Use the proxy endpoint instead of direct URL
+    const response = await fetch('/api-proxy/portfolios')
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.indexOf("application/json") === -1) {
+      const text = await response.text();
+      // Check if it's the HTML fallback (likely index.html)
+      if (text.includes("<!doctype html>") || text.includes("<html")) {
+        throw new Error("Received HTML instead of JSON. The proxy might not be configured correctly. Please restart your dev/preview server.");
+      }
+      throw new Error(`Expected JSON but received ${contentType}`);
+    }
+
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
     }
