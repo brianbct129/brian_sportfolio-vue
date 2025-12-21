@@ -15,7 +15,7 @@
           <div class="wrap">
             <div class="work-content">
               <div class="w-image">
-                <img loading="lazy" width="468" height="856" :src="work.images1" :alt="work.title || 'Work Image'">
+                <img @load="handleImageLoad" loading="lazy" width="468" height="856" :src="work.images1" :alt="work.title || 'Work Image'">
               </div>
               <div class="content">
                 <div class="content-top">
