@@ -3,11 +3,11 @@
     <div class="block-quote">
       <h5 class="quote-text font-3 fw-normal text-black-72">
         <span class="text-black-56">“</span>
-        Design is not just what it looks like and feels like. Design is how it works.
+        A design system isn’t a project. It’s a product serving products.
         <span class="text-black-56">“</span>
       </h5>
       <p class="quote-author font-3 text-black-56 h6 text-end ">
-        Steve Jobs
+        Nathan Curtis
       </p>
     </div>
     <div class="br-line"></div>

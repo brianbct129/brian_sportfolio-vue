@@ -13,7 +13,7 @@ import EducationExperience from './components/EducationExperience.vue'
 import WorkGrid from './components/WorkGrid.vue'
 import Services from './components/Services.vue'
 import TechStack from './components/TechStack.vue'
-import Testimonials from './components/Testimonials.vue'
+// import Testimonials from './components/Testimonials.vue'
 import ContactForm from './components/ContactForm.vue'
 import FooterSection from './components/FooterSection.vue'
 onMounted(() => {
@@ -61,7 +61,7 @@ onMounted(() => {
                   <WorkGrid />
                   <Services />
                   <TechStack />
-                  <Testimonials />
+                  <!-- <Testimonials /> -->
                   <ContactForm />
                   <FooterSection />
                 </div>
