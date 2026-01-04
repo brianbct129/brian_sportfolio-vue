@@ -6538,7 +6538,7 @@ button.animate-btn::after,
   border: 1px solid var(--black-6);
 }
 .service-accordion_item .service-image img {
-  width: 345px;
+  width: 100%;
   height: 206px;
   object-fit: cover;
   min-height: 200px;
