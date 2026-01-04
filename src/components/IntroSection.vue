@@ -3,20 +3,22 @@ import { ref, onMounted, onBeforeUnmount, onUpdated, nextTick } from 'vue'
 import { certificates as certificatesData } from '../data/certificates'
 const yearsExperience = new Date().getFullYear() - 2020
 const totalCertificates = certificatesData.length
-import brand1 from '../assets/images/brand/brand-1.svg'
-import brand1Dark from '../assets/images/brand/brand-1_dark.svg'
-import brand2 from '../assets/images/brand/brand-2.svg'
-import brand2Dark from '../assets/images/brand/brand-2_dark.svg'
-import brand3 from '../assets/images/brand/brand-3.svg'
-import brand3Dark from '../assets/images/brand/brand-3_dark.svg'
-import brand4 from '../assets/images/brand/brand-4.svg'
-import brand4Dark from '../assets/images/brand/brand-4_dark.svg'
+import dark_apu from '../assets/images/item/dark_apu.png'
+import light_apu from '../assets/images/item/light_apu.png'
+import light_dbs from '../assets/images/item/light_dbs.png'
+import dark_dbs from '../assets/images/item/dark_dbs.png'
+// import light_binus from '../assets/images/item/light_binus.png'
+// import dark_binus from '../assets/images/item/dark_binus.png'
+import light_qf from '../assets/images/item/light_qf.png'
+import dark_qf from '../assets/images/item/dark_qf.png'
+import smartindo from '../assets/images/item/smartindo.png'
 
 const brands = [
-  { light: brand1, dark: brand1Dark, w: 132, h: 24 },
-  { light: brand2, dark: brand2Dark, w: 122, h: 24 },
-  { light: brand3, dark: brand3Dark, w: 125, h: 24 },
-  { light: brand4, dark: brand4Dark, w: 112, h: 24 },
+  { light: smartindo, dark: smartindo, w: 200, h: 120 },
+  { light: dark_qf, dark: light_qf, w: 200, h: 120 },
+  { light: dark_apu, dark: light_apu, w: 200, h: 120, className: 'mt-2' },
+  { light: light_dbs, dark: dark_dbs, w: 120, h: 120 },
+  { light: dark_binus, dark: light_binus, w: 120, h: 120 },
 ]
 
 const isDark = ref(false)
@@ -133,7 +135,7 @@ onBeforeUnmount(() => {
       <div class="infiniteSlide-track">
         <div class="brand-set" v-for="i in 4" :key="i">
           <div class="image-brand" v-for="(brand, idx) in brands" :key="idx">
-            <img :src="isDark ? brand.dark : brand.light" :width="brand.w" :height="brand.h" alt="Brand">
+            <img class="mt-2" :src="isDark ? brand.dark : brand.light" :width="brand.w" :height="brand.h" alt="Brand">
           </div>
         </div>
       </div>
