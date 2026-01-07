@@ -3,23 +3,6 @@ import { ref, onMounted, onBeforeUnmount, onUpdated, nextTick } from 'vue'
 import { certificates as certificatesData } from '../data/certificates'
 const yearsExperience = new Date().getFullYear() - 2020
 const totalCertificates = certificatesData.length
-import dark_apu from '../assets/images/item/dark_apu.png'
-import light_apu from '../assets/images/item/light_apu.png'
-import light_dbs from '../assets/images/item/light_dbs.png'
-import dark_dbs from '../assets/images/item/dark_dbs.png'
-// import light_binus from '../assets/images/item/light_binus.png'
-// import dark_binus from '../assets/images/item/dark_binus.png'
-import light_qf from '../assets/images/item/light_qf.png'
-import dark_qf from '../assets/images/item/dark_qf.png'
-import smartindo from '../assets/images/item/smartindo.png'
-
-const brands = [
-  { light: smartindo, dark: smartindo, w: 200, h: 120 },
-  { light: dark_qf, dark: light_qf, w: 200, h: 120 },
-  { light: dark_apu, dark: light_apu, w: 200, h: 120, className: 'mt-2' },
-  { light: light_dbs, dark: dark_dbs, w: 120, h: 120 },
-  // { light: dark_binus, dark: light_binus, w: 120, h: 120 },
-]
 
 const isDark = ref(false)
 let observer = null
@@ -63,7 +46,7 @@ onBeforeUnmount(() => {
 })
 </script>
 <template>
-  <div id="home" class="section-intro">
+  <div id="home" class="section-intro flat-spacing">
   <div class="intro-author effectFade fadeUp no-div">
     <div class="author-image">
       <img loading="lazy" width="33" height="31" src="../assets/images/avatar/avatar-boy.jpeg" alt="Image">

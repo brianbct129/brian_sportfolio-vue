@@ -43,12 +43,12 @@
           <p class="tool-tip text-caption">Tech</p>
         </a>
       </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a href="#testimonial" class="item-link scroll-link" :class="{ active: activeSection === 'testimonial' }">
           <i class="icon icon-tes"></i>
           <p class="tool-tip text-caption">Testimonials</p>
         </a>
-      </li>
+      </li> -->
       <li class="br-line"></li>
       <li class="nav-item">
         <a href="#contact" class="item-link scroll-link" :class="{ active: activeSection === 'contact' }">

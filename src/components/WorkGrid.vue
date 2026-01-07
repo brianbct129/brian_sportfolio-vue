@@ -24,7 +24,21 @@
                   </div>
                   <h4 class="w-title letter-space--2 text-white-72">{{ work.title || 'Project Name' }}</h4>
                   <p class="w-desc text-white-56 text-body-3">
-                    {{ work.description_proyek || 'No description available.' }}
+                    <span v-if="!work.isExpanded">
+                      {{ (work.description_proyek || 'No description available.').length > 300 ? (work.description_proyek || 'No description available.').substring(0, 300) + '...' : (work.description_proyek || 'No description available.') }}
+                    </span>
+                    <span v-else>
+                      {{ work.description_proyek || 'No description available.' }}
+                    </span>
+                    <a 
+                      href="#"
+                      v-if="(work.description_proyek || 'No description available.').length > 300" 
+                      @click.prevent="work.isExpanded = !work.isExpanded" 
+                      class="read-more-btn text-white-72 fw-medium ms-2" 
+                      style="text-decoration: underline; font-size: 14px; margin-top: 4px; display: inline-block;"
+                    >
+                      {{ work.isExpanded ? 'Show Less' : 'Read More' }}
+                    </a>
                   </p>
                   <div class="w-highlight">
                     <div class="box-high">
