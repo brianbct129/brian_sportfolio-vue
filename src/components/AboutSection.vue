@@ -76,7 +76,7 @@ onBeforeUnmount(() => {
 })
 </script>
 <template>
-  <div id="about" class="section-about flat-spacing" ref="root">
+  <div id="about" class="section-about" ref="root">
     <div class="sect-tag text-caption fw-medium effectFade fadeUp no-div">
       <i class="icon icon-user-circle"></i>
       About

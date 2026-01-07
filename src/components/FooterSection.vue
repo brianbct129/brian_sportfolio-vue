@@ -53,8 +53,8 @@
 </template>
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import logoLight from '../assets/images/logo/logo.svg'
-import logoDark from '../assets/images/logo/logo-2.svg'
+import logoLight from '../assets/images/logo/light.png'
+import logoDark from '../assets/images/logo/dark.png'
 const isDark = ref(false)
 let observer = null
 onMounted(() => {
@@ -68,5 +68,4 @@ onBeforeUnmount(() => {
   if (observer) observer.disconnect()
 })
 </script>
-<style scoped>
-</style>
+

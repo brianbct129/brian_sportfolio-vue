@@ -18,7 +18,7 @@ const brands = [
   { light: dark_qf, dark: light_qf, w: 200, h: 120 },
   { light: dark_apu, dark: light_apu, w: 200, h: 120, className: 'mt-2' },
   { light: light_dbs, dark: dark_dbs, w: 120, h: 120 },
-  { light: dark_binus, dark: light_binus, w: 120, h: 120 },
+  // { light: dark_binus, dark: light_binus, w: 120, h: 120 },
 ]
 
 const isDark = ref(false)
@@ -63,7 +63,7 @@ onBeforeUnmount(() => {
 })
 </script>
 <template>
-  <div id="home" class="section-intro flat-spacing">
+  <div id="home" class="section-intro">
   <div class="intro-author effectFade fadeUp no-div">
     <div class="author-image">
       <img loading="lazy" width="33" height="31" src="../assets/images/avatar/avatar-boy.jpeg" alt="Image">
@@ -125,19 +125,6 @@ onBeforeUnmount(() => {
           <span class="number" data-speed="1000" :data-to="totalCertificates">{{ totalCertificates }}</span>+
         </p>
         <p class="text text-black-56 text-body-3">Total Certificate</p>
-      </div>
-    </div>
-    <p class="intro-client letter-space--05 text-body-3">
-      <i class="icon icon-global-elip"></i>
-      Our clients (2015-25©)
-    </p>
-    <div class="infiniteSlide-brand">
-      <div class="infiniteSlide-track">
-        <div class="brand-set" v-for="i in 4" :key="i">
-          <div class="image-brand" v-for="(brand, idx) in brands" :key="idx">
-            <img class="mt-2" :src="isDark ? brand.dark : brand.light" :width="brand.w" :height="brand.h" alt="Brand">
-          </div>
-        </div>
       </div>
     </div>
   </div>
