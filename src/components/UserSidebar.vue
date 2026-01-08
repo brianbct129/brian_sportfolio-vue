@@ -5,7 +5,7 @@ import vectorUserDark from '../assets/images/item/vector-user_dark.svg'
 import logoLight from '../assets/images/logo/light.png'
 import logoDark from '../assets/images/logo/dark.png'
 import avatarImg from '../assets/images/avatar/avatar.png'
-
+import cvPdf from '../assets/attachment/CV_Brian.pdf'
 const root = ref(null)
 const isDark = ref(false)
 let t = null
@@ -89,9 +89,9 @@ onBeforeUnmount(() => {
         <img loading="lazy" width="60" height="60" :src="isDark ? logoDark : logoLight" alt="Image">
       </div>
       <ul class="tf-social-icon-2 user-social d-grid">
-        <li><a href="#"><i class="bi bi-github"></i></a></li>
-        <li><a href="#"><i class="icon icon-linkin"></i></a></li>
-        <li><a href="#"><i class="bi bi-instagram"></i></a></li>
+        <li><a href="https://github.com/brianbct129"><i class="bi bi-github"></i></a></li>
+        <li><a href="https://www.linkedin.com/in/brian-cavarel-thomas/"><i class="icon icon-linkin"></i></a></li>
+        <li><a href="https://www.instagram.com/brcavth/"><i class="bi bi-instagram"></i></a></li>
       </ul>
       <div class="user-info">
         <p class="avaiable-dot text-body-3 fw-medium d-sm-none">
@@ -122,7 +122,7 @@ onBeforeUnmount(() => {
               <i class="icon icon-arrow-right-top"></i>
             </span>
           </a>
-          <a href="#" class="action-down">
+          <a :href="cvPdf" download="CV_Brian.pdf" class="action-down">
             <i class="icon icon-download"></i>
             <span class="text-body-3">Download CV</span>
           </a>
