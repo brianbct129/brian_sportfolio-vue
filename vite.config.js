@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
     changeOrigin: true,
     rewrite: (path) => {
       // Rewrite /api-proxy/portfolios -> /api/portfolios?api_key=...
-      return path.replace(/^\/api-proxy/, '/api') + `?api_key=${env.QUANTUM_PORTFOLIO_API_KEY}`
+      return path.replace(/^\/api-proxy/, '/api') + `?api_key=${env.VITE_QUANTUM_PORTFOLIO_API_KEY}`
     }
   }
 

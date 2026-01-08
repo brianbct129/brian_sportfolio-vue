@@ -99,8 +99,15 @@ const handleImageLoad = () => {
 
 const fetchData = async () => {
   try {
-    // Use the proxy endpoint instead of direct URL
-    const response = await fetch('/api-proxy/portfolios')
+    // Determine the API URL based on environment
+    // In Dev: Use proxy /api-proxy/portfolios (API key handled by proxy)
+    // In Prod: Use direct URL (API key appended manually)
+    const apiKey = import.meta.env.VITE_QUANTUM_PORTFOLIO_API_KEY
+    const apiUrl = import.meta.env.DEV 
+      ? '/api-proxy/portfolios' 
+      : `https://quantumitco.com/api/portfolios?api_key=${apiKey}`
+
+    const response = await fetch(apiUrl)
     const contentType = response.headers.get("content-type");
     if (contentType && contentType.indexOf("application/json") === -1) {
       const text = await response.text();
