@@ -25,14 +25,14 @@
                   <h4 class="w-title letter-space--2 text-white-72">{{ work.title || 'Project Name' }}</h4>
                   <p class="w-desc text-white-56 text-body-3">
                     <span v-if="!work.isExpanded">
-                      {{ (work.description_proyek || 'No description available.').length > 300 ? (work.description_proyek || 'No description available.').substring(0, 300) + '...' : (work.description_proyek || 'No description available.') }}
+                      {{ (work.description_proyek || 'No description available.').length > 200 ? (work.description_proyek || 'No description available.').substring(0, 200) + '...' : (work.description_proyek || 'No description available.') }}
                     </span>
                     <span v-else>
                       {{ work.description_proyek || 'No description available.' }}
                     </span>
                     <a 
                       href="#"
-                      v-if="(work.description_proyek || 'No description available.').length > 300" 
+                      v-if="(work.description_proyek || 'No description available.').length > 200" 
                       @click.prevent="work.isExpanded = !work.isExpanded" 
                       class="read-more-btn text-white-72 fw-medium ms-2" 
                       style="text-decoration: underline; font-size: 14px; margin-top: 4px; display: inline-block;"
@@ -43,7 +43,7 @@
                   <div class="w-highlight">
                     <div class="box-high">
                       <p class="text-body-3 text-white-56">Year</p>
-                      <p class="text-body-1 text-white-72">{{ work.year || '2024' }}</p>
+                      <p class="text-body-1 text-white-72">{{ formatYear(work.date) }}</p>
                     </div>
                     <div class="box-high">
                       <p class="text-body-3 text-white-56">Kota</p>
@@ -82,6 +82,14 @@ import logoLight from '../assets/images/logo/light.png'
 const works = ref([])
 const loading = ref(true)
 const error = ref(null)
+
+const formatYear = (value) => {
+  if (!value) return ''
+  const match = String(value).match(/^\d{4}/)
+  if (match) return match[0]
+  const d = new Date(value)
+  return isNaN(d.getTime()) ? '' : String(d.getUTCFullYear())
+}
 
 const handleImageLoad = () => {
   if (window.ScrollTrigger) {

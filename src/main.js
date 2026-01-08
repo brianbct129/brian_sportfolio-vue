@@ -31,6 +31,12 @@ window.ScrollTrigger = ScrollTrigger
 window.ScrollToPlugin = ScrollToPlugin
 // SplitText plugin is not loaded in module context; gsapAnimation.js will fallback without it.
 
+// Ensure initial theme and image switches match original HTML behavior
+const defaultMode = document.body.getAttribute('data-default-mode')
+if (defaultMode === 'dark') {
+  document.body.classList.add('dark-mode')
+}
+
 const app = createApp(App)
 app.mount('#app')
 
@@ -39,11 +45,6 @@ import('./vendor/carousel.js')
 import('./vendor/gsapAnimation.js')
 import('./vendor/animation-change-text.js')
 
-// Ensure initial theme and image switches match original HTML behavior
-const defaultMode = document.body.getAttribute('data-default-mode')
-if (defaultMode === 'dark') {
-  document.body.classList.add('dark-mode')
-}
 const applyImageSwitch = () => {
   const isDark = document.body.classList.contains('dark-mode')
   document.querySelectorAll('.image-switch').forEach((img) => {
