@@ -4482,11 +4482,14 @@ button.animate-btn::after,
 }
 
 .sidebar-user {
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  -ms-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
-  transition: all 0.3s ease;
+  -webkit-transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+  -moz-transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+  -ms-transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+  -o-transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+  will-change: transform, opacity, visibility;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
   display: flex;
   align-items: center;
   /*-- min, between, max --*/
@@ -4596,7 +4599,7 @@ button.animate-btn::after,
   aspect-ratio: 0.546728972;
 }
 .sidebar-user.active {
-  transform: translateY(-20px);
+  transform: translateY(-20px) translateZ(0);
   opacity: 0;
   visibility: hidden;
 }
@@ -5688,12 +5691,13 @@ button.animate-btn::after,
     overflow: hidden;
     display: flex;
     align-items: center;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -ms-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-    transform: translateY(-40px);
+    -webkit-transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+    -moz-transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+    -ms-transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+    -o-transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+    will-change: transform, opacity, visibility;
+    transform: translateY(-40px) translateZ(0);
     opacity: 0;
     visibility: hidden;
   }

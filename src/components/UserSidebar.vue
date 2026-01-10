@@ -113,7 +113,7 @@ onBeforeUnmount(() => {
         </p>
         <div class="br-line"></div>
         <div class="action-group">
-          <a href="#" class="tf-btn-action">
+          <a href="https://wa.me/6289505991562" class="tf-btn-action">
             <span class="ic-wrap">
               <i class="icon icon-arrow-right-top"></i>
             </span>
