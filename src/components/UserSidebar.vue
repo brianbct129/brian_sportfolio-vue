@@ -22,6 +22,28 @@ onMounted(() => {
   })
   observer.observe(document.body, { attributes: true })
 
+  const isMobile = window.innerWidth < 768;
+  if (isMobile) {
+    // Disable complex text animation on mobile to prevent stuttering
+    const headline = root.value?.querySelector('.animationtext');
+    if (headline) {
+      // Ensure the first item is visible and others are hidden without animation loop
+      const wrapper = headline.querySelector('.cd-words-wrapper');
+      if (wrapper) {
+         wrapper.style.display = 'inline-block';
+         const items = wrapper.querySelectorAll('.item-text');
+         items.forEach((item, index) => {
+            item.style.position = 'relative';
+            item.style.display = index === 0 ? 'inline' : 'none';
+            item.style.opacity = '1';
+            item.classList.remove('is-hidden');
+            if (index === 0) item.classList.add('is-visible');
+         });
+      }
+    }
+    return;
+  }
+
   const headline = root.value?.querySelector('.animationtext')
   if (!headline) return
   if (headline.classList.contains('clip')) return

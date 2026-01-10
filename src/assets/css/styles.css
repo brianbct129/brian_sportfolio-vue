@@ -131,6 +131,15 @@ body {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: none;
+  overflow-x: hidden; /* Prevent horizontal scroll glitches */
+}
+
+/* Optimization for mobile stuttering */
+.sidebar-user .wrap,
+.wg-work .wrap {
+  will-change: transform, opacity;
+  transform: translateZ(0); /* Hardware acceleration */
+  backface-visibility: hidden;
 }
 
 html,
