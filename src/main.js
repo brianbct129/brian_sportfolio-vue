@@ -40,14 +40,14 @@ if (defaultMode === 'dark') {
 const app = createApp(App)
 app.mount('#app')
 
-// document.addEventListener('click', (e) => {
-//   const a = e.target.closest('a[href="#"]')
-//   if (!a) return
-//   e.preventDefault()
-//   if (a.classList.contains('go-top')) {
-//     gsap.to(window, { duration: 0.6, scrollTo: 0, ease: 'power2.out' })
-//   }
-// })
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('a[href="#"]')
+  if (!a) return
+  e.preventDefault()
+  if (a.classList.contains('go-top')) {
+    gsap.to(window, { duration: 0.6, scrollTo: 0, ease: 'power2.out' })
+  }
+})
 
 // Custom initializers that touch DOM: load after mount
 import('./vendor/carousel.js')
