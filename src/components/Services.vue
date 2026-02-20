@@ -34,7 +34,14 @@
                 </div>
               </div>
               <div class="service-tag">
-                <a href="#" class="tag-item text-body-3 fw-medium text-black-72 link" v-for="(tag, tagIndex) in service.tags" :key="tagIndex">{{ tag }}</a>
+                <button
+                  type="button"
+                  class="tag-item text-body-3 fw-medium text-black-72 link"
+                  v-for="(tag, tagIndex) in service.tags"
+                  :key="tagIndex"
+                >
+                  {{ tag }}
+                </button>
               </div>
               <p class="service-desc text-black-56">
                 {{ service.description }}

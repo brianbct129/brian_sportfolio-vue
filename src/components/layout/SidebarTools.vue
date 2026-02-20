@@ -58,9 +58,9 @@
       </li>
     </ul>
     <div class="nav-bottom">
-      <a href="#" class="tf-btn-icon go-top">
+      <button type="button" class="tf-btn-icon go-top" @click="scrollTop">
         <i class="icon icon-arrow-top"></i>
-      </a>
+      </button>
     </div>
   </div>
 </template>
@@ -76,6 +76,12 @@ const toggleMode = () => {
     const src = isDark ? img.getAttribute('data-dark') : img.getAttribute('data-light')
     if (src) img.setAttribute('src', src)
   })
+}
+
+const scrollTop = () => {
+  if (window && typeof window.scrollTo === 'function') {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 }
 </script>
 <style scoped>
