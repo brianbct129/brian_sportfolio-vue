@@ -4473,6 +4473,9 @@ button.animate-btn::after,
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
   /*-- min, between, max --*/
   /*-- min, between, max --*/
 }
@@ -4626,11 +4629,13 @@ button.animate-btn::after,
 @media (max-width: 991px) {
   .sidebar-user {
     margin: 0px 16px 0px;
+    max-height: 100vh;
   }
   .sidebar-user .wrap {
     max-height: calc(100vh - 24px - 92px);
     display: flex;
     width: 100%;
+    overscroll-behavior: contain;
   }
   .sidebar-user .user-image::before {
     content: "";
@@ -4654,6 +4659,7 @@ button.animate-btn::after,
     max-width: 430px;
     padding: 0px 15px;
     margin: 0 auto;
+    max-height: 100vh;
   }
   .sidebar-user .user-logo {
     top: 20px;
