@@ -4942,6 +4942,9 @@ button.animate-btn::after,
   .section-work .sect-tag {
     position: sticky;
     top: 72px;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      touch-action: pan-y;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -ms-transition: all 0.3s ease;
