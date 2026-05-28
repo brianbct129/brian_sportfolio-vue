@@ -56,12 +56,12 @@
 </template>
 <script setup>
 import { onMounted, onUpdated, nextTick } from 'vue'
-const service1 = 'https://wp-media.cloudairy.com/template/wp-content/uploads/2025/02/01053446/Kubernetes-Architecture-Thumbnail-3.png'
-const service2 = 'https://img.freepik.com/free-vector/infographic-dashboard-user-panel_52683-30026.jpg?semt=ais_hybrid&w=740&q=80'
-const service3 = 'https://img.freepik.com/free-photo/business-people-are-brainstorming_53876-137640.jpg?semt=ais_hybrid&w=740&q=80'
-const service4 = 'https://wallpapers.com/images/featured/project-management-wfbuewoquiigeuht.jpg'
-const service5 = 'https://i.pinimg.com/1200x/51/01/63/510163345be6f7368beb0c4c9246ed6c.jpg'
-const service6 = 'https://assets.bosch.com/media/global/research/research_fields/digitalization_and_connectivity/software_development/software-development-source-code.jpg'
+const service1 = new URL('../assets/images/gallery/req-1.avif', import.meta.url).href
+const service2 = new URL('../assets/images/gallery/req-2.webp', import.meta.url).href
+const service3 = new URL('../assets/images/gallery/pm-01.avif', import.meta.url).href
+const service4 = new URL('../assets/images/gallery/pm-02.jpg', import.meta.url).href
+const service5 = new URL('../assets/images/gallery/soft-01.jpg', import.meta.url).href
+const service6 = new URL('../assets/images/gallery/soft-02.jpg', import.meta.url).href
 
 const services = [
   {

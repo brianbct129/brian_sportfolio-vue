@@ -44,11 +44,18 @@
 </template>
 <script setup>
 import { ref, onMounted, onBeforeUnmount, onUpdated, nextTick } from 'vue'
-import tech3 from '../assets/images/section/tech-3.svg'
-import light_sql from '../assets/images/section/light_sql.png'
-import visual_paradigm from '../assets/images/section/visual_paradigm.png'
-import trello from '../assets/images/section/trello.png'
-import nodejs from '../assets/images/section/nodejs.png'
+import visual_paradigm from '../assets/images/skills/visualparadigm.webp'
+import trello from '../assets/images/skills/trello.webp'
+import vue from '../assets/images/skills/vue.png'
+import nodejs from '../assets/images/skills/nodejs.webp'
+import flask from '../assets/images/skills/Flask_Series.png'
+import django from '../assets/images/skills/django-icon.svg'
+import mysql from '../assets/images/skills/sql.png'
+import light_sql from '../assets/images/skills/sql.webp'
+import photoshop from '../assets/images/skills/photoshop.svg'
+import laravel from '../assets/images/skills/Laravel.svg'
+import tailwind from '../assets/images/skills/pngwing.com.png'
+import bootstrap from '../assets/images/skills/bootstrap-logo-shadow@2x.png'
 
 const isDark = ref(false)
 let observer = null
@@ -94,7 +101,7 @@ const techList = [
   {
     name: 'Vue.js',
     desc: 'SPA & front-end architecture',
-    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/2367px-Vue.js_Logo_2.svg.png',
+    src: vue,
     w: 30,
     h: 28,
     progress: 85,
@@ -110,7 +117,7 @@ const techList = [
   {
     name: 'Flask',
     desc: 'API & backend development',
-    src: 'https://hackersandslackers-cdn.storage.googleapis.com/2024/09/Flask_Series.png',
+    src: flask,
     w: 38,
     h: 28,
     progress: 75,
@@ -118,7 +125,7 @@ const techList = [
    {
     name: 'Django',
     desc: 'API & backend development',
-    src: 'https://www.svgrepo.com/show/353657/django-icon.svg',
+    src: django,
     w: 38,
     h: 28,
     progress: 70,
@@ -126,7 +133,7 @@ const techList = [
   {
     name: 'MySQL',
     desc: 'Database management',
-    src: 'https://upload.wikimedia.org/wikipedia/labs/8/8e/Mysql_logo.png',
+    src: mysql,
     srcDark: light_sql,
     w: 40,
     h: 28,
@@ -135,7 +142,7 @@ const techList = [
   {
     name: 'Adobe Photoshop',
     desc: 'UI assets & visual editing',
-    src: tech3,
+    src: photoshop,
     w: 29,
     h: 28,
     progress: 80,
@@ -143,7 +150,7 @@ const techList = [
   {
     name: 'Laravel',
     desc: 'API & backend development',
-    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Laravel.svg/1969px-Laravel.svg.png',
+    src: laravel,
     w: 29,
     h: 28,
     progress: 88,
@@ -151,7 +158,7 @@ const techList = [
   {
     name: 'Tailwind',
     desc: 'Responsive UI components',
-    src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/1024px-Tailwind_CSS_Logo.svg.png?20230715030042',
+    src: tailwind,
     w: 35,
     h: 28,
     progress: 67,
@@ -159,7 +166,7 @@ const techList = [
   {
     name: 'Bootstrap',
     desc: 'Responsive UI components',
-    src: 'https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo-shadow@2x.png',
+    src: bootstrap,
     w: 35,
     h: 28,
     progress: 100,
