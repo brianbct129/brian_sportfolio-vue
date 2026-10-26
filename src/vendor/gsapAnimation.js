@@ -172,26 +172,17 @@ ScrollTrigger.config({ ignoreMobileResize: true });
             st.each(function (index, el) {
                 var $el = $(el);
                 var delay = parseFloat($el.data("delay")) || 0;
-                // scrub fights native mobile scroll — use one-shot play on touch/narrow
+                // Avoid heavy scrub on all viewports — one-shot play keeps scroll native-smooth
                 var settings = {
-                    scrollTrigger: isMobileScroll()
-                        ? {
-                              trigger: el,
-                              start: "top 92%",
-                              once: true,
-                              toggleActions: "play none none none",
-                          }
-                        : {
-                              trigger: el,
-                              scrub: 3,
-                              once: true,
-                              toggleActions: "play none none none",
-                              start: "30px bottom",
-                              end: "bottom bottom",
-                              delay: delay,
-                          },
+                    scrollTrigger: {
+                        trigger: el,
+                        start: isMobileScroll() ? "top 92%" : "top 88%",
+                        once: true,
+                        toggleActions: "play none none none",
+                    },
                     duration: 0.8,
                     ease: "power3.out",
+                    delay: delay,
                 };
 
                 if ($el.hasClass("effectRight")) {
@@ -374,33 +365,17 @@ ScrollTrigger.config({ ignoreMobileResize: true });
     var scrollLine = () => {
         if ($(".scroll-down").length) {
             gsap.set(".prg-line", { height: "0%" });
-
-            if (isMobileScroll()) {
-                // CSS-driven / one-shot: avoid continuous scrub on mobile
-                gsap.to(".prg-line", {
-                    height: "100%",
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: ".scroll-down",
-                        start: "top 70%",
-                        end: "bottom 40%",
-                        scrub: 0.4,
-                        // lighter scrub still cheaper than desktop continuous + other effects
-                    },
-                });
-            } else {
-                gsap.to(".prg-line", {
-                    height: "100%",
-                    duration: 2,
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: ".scroll-down",
-                        start: "top 40%",
-                        end: "bottom 30%",
-                        scrub: true,
-                    },
-                });
-            }
+            // Light scrub only — scrub:true on desktop was a major scroll hitch source
+            gsap.to(".prg-line", {
+                height: "100%",
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".scroll-down",
+                    start: isMobileScroll() ? "top 70%" : "top 40%",
+                    end: isMobileScroll() ? "bottom 40%" : "bottom 30%",
+                    scrub: 0.5,
+                },
+            });
 
             const items = document.querySelectorAll(".timeline-item");
             items.forEach((item) => {
@@ -441,7 +416,7 @@ ScrollTrigger.config({ ignoreMobileResize: true });
         gsap.registerPlugin(ScrollTrigger);
 
         // Desktop-only sticky detail panel — skip on mobile to free scroll budget
-        if (window.innerWidth < 1200 || isMobileScroll()) {
+        if (window.innerWidth < 1200) {
             document.querySelector(".sidebar-user")?.classList.remove("active");
             gsap.utils.toArray(".wrap").forEach((el) => el.classList.remove("active"));
             return;
@@ -452,62 +427,98 @@ ScrollTrigger.config({ ignoreMobileResize: true });
         let clickScrollTimer = null;
         let resizeTimer = null;
         let linksBound = false;
+        let activeIndex = -1;
 
         function scrollActive() {
             const sidebar = document.querySelector(".sidebar-user");
-            const works = document.querySelectorAll(".sticky-item");
+            const works = Array.from(document.querySelectorAll(".sticky-item"));
 
             if (!sidebar || !works.length) return;
 
             triggers.forEach((t) => t.kill());
             triggers = [];
+            activeIndex = -1;
 
             const firstWork = works[0];
             const lastWork = works[works.length - 1];
+            const wraps = works.map((w) => w.querySelector(".wrap"));
 
-            const sidebarTrigger = ScrollTrigger.create({
-                trigger: firstWork,
-                start: "top 142px",
-                endTrigger: lastWork,
-                end: "bottom 68px",
-                onEnter: () => !isClickScrolling && sidebar.classList.add("active"),
-                onLeave: () => !isClickScrolling && sidebar.classList.remove("active"),
-                onEnterBack: () => !isClickScrolling && sidebar.classList.add("active"),
-                onLeaveBack: () => !isClickScrolling && sidebar.classList.remove("active"),
-                invalidateOnRefresh: true,
-            });
-            triggers.push(sidebarTrigger);
+            const setActive = (index) => {
+                if (isClickScrolling || index === activeIndex || index < 0) return;
+                // Only swap project panels while inside the work section
+                if (!sidebar.classList.contains("active")) return;
+                activeIndex = index;
+                wraps.forEach((el, i) => {
+                    if (!el) return;
+                    el.classList.toggle("active", i === index);
+                });
+            };
 
-            works.forEach((work) => {
-                const wrap = work.querySelector(".wrap");
-                if (!wrap) return;
+            // Sticky pile: last card that reached the sticky line is on top
+            const syncActiveFromSticky = () => {
+                if (isClickScrolling) return;
+                if (!sidebar.classList.contains("active")) return;
+                let active = 0;
+                for (let i = 0; i < works.length; i++) {
+                    const top = works[i].getBoundingClientRect().top;
+                    if (top <= 150) active = i;
+                }
+                setActive(active);
+            };
 
-                const workTrigger = ScrollTrigger.create({
-                    trigger: work,
+            const clearWorkPanels = () => {
+                activeIndex = -1;
+                wraps.forEach((el) => el?.classList.remove("active"));
+                sidebar.classList.remove("active");
+            };
+
+            const enterWorkSection = () => {
+                if (isClickScrolling) return;
+                sidebar.classList.add("active");
+                syncActiveFromSticky();
+            };
+
+            triggers.push(
+                ScrollTrigger.create({
+                    trigger: firstWork,
                     start: "top 142px",
+                    endTrigger: lastWork,
                     end: "bottom 68px",
-                    onEnter: () => {
-                        if (isClickScrolling) return;
-                        gsap.utils.toArray(".wrap").forEach((el) => el.classList.remove("active"));
-                        wrap.classList.add("active");
-                    },
-                    onEnterBack: () => {
-                        if (isClickScrolling) return;
-                        gsap.utils.toArray(".wrap").forEach((el) => el.classList.remove("active"));
-                        wrap.classList.add("active");
-                    },
-                    onLeave: () => {
-                        if (isClickScrolling) return;
-                        wrap.classList.remove("active");
-                    },
-                    onLeaveBack: () => {
-                        if (isClickScrolling) return;
-                        wrap.classList.remove("active");
+                    // Inside work → hide UserSidebar, show project card panel
+                    onEnter: enterWorkSection,
+                    onEnterBack: enterWorkSection,
+                    // Before / after work → show UserSidebar again, hide project panels
+                    onLeave: () => !isClickScrolling && clearWorkPanels(),
+                    onLeaveBack: () => !isClickScrolling && clearWorkPanels(),
+                    onUpdate: syncActiveFromSticky,
+                    onRefresh: (self) => {
+                        if (self.isActive) enterWorkSection();
+                        else clearWorkPanels();
                     },
                     invalidateOnRefresh: true,
-                });
-                triggers.push(workTrigger);
+                })
+            );
+
+            // Per-card triggers only while work section is active
+            works.forEach((work, index) => {
+                if (!wraps[index]) return;
+                triggers.push(
+                    ScrollTrigger.create({
+                        trigger: work,
+                        start: "top 150px",
+                        end: "bottom 150px",
+                        onEnter: () => setActive(index),
+                        onEnterBack: () => setActive(index),
+                        invalidateOnRefresh: true,
+                    })
+                );
             });
+
+            // Sync immediately for current scroll position (onEnter won't fire if already inside)
+            ScrollTrigger.refresh();
+            const sectionTrigger = triggers[0];
+            if (sectionTrigger?.isActive) enterWorkSection();
+            else clearWorkPanels();
 
             if (!linksBound) {
                 linksBound = true;
@@ -532,6 +543,7 @@ ScrollTrigger.config({ ignoreMobileResize: true });
                                 const sidebarEl = document.querySelector(".sidebar-user");
                                 gsap.utils.toArray(".wrap").forEach((el) => el.classList.remove("active"));
                                 if (sidebarEl) sidebarEl.classList.remove("active");
+                                activeIndex = -1;
                             }
                             ScrollTrigger.refresh();
                         }, 800);

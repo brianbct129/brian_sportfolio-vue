@@ -14,7 +14,9 @@ import './vendor/jquery-validate.js'
 import './vendor/countto.js'
 import './vendor/infinityslide.js'
 import './vendor/bootstrap.min.js'
-import './vendor/ScrollSmooth.js'
+// SmoothScroll hijacks wheel (600ms tween) and feels sticky on modern desktop.
+// Keep native scrolling instead.
+// import './vendor/ScrollSmooth.js'
 // Swiper from npm, expose globally for legacy scripts
 import Swiper from 'swiper/bundle'
 import 'swiper/css/bundle'

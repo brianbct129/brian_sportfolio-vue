@@ -238,18 +238,8 @@ section {
 -------------------------------------------------------------- */
 html {
   margin-right: 0 !important;
-  /* Native scroll on touch — smooth fights mobile inertia and feels "stuck" */
+  /* Always native scroll — CSS smooth + SmoothScroll + GSAP scrub felt laggy */
   scroll-behavior: auto !important;
-}
-@media (min-width: 1200px) and (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth !important;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto !important;
-  }
 }
 
 * {
@@ -4594,9 +4584,10 @@ button.animate-btn::after,
   aspect-ratio: 0.546728972;
 }
 .sidebar-user.active {
-  transform: translateY(-20px);
-  opacity: 0;
-  visibility: hidden;
+  transform: translateY(-20px) !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 @media (min-width: 992px) {
   .sidebar-user {
@@ -4986,6 +4977,7 @@ button.animate-btn::after,
     /* Same padding on every item so pile heights stay aligned */
     padding-top: 24px;
     padding-bottom: 24px;
+    /* Do NOT use contain/transform here — they break position:fixed .wrap */
   }
 }
 
@@ -5714,20 +5706,22 @@ button.animate-btn::after,
     overflow: hidden;
     display: flex;
     align-items: center;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -ms-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    transition: all 0.3s ease;
+    -webkit-transition: opacity 0.3s ease, transform 0.3s ease;
+    -moz-transition: opacity 0.3s ease, transform 0.3s ease;
+    -ms-transition: opacity 0.3s ease, transform 0.3s ease;
+    -o-transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
     transform: translateY(-40px);
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
+    z-index: 20;
   }
   .wg-work .wrap.active {
-    transform: translateY(0px);
-    opacity: 1;
-    visibility: visible;
-    /* min-width: 600px; */
+    transform: translateY(0px) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
   }
   .wg-work .work-content {
     padding: 6px;
