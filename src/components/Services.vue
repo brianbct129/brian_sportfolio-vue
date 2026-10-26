@@ -55,7 +55,6 @@
   </div>
 </template>
 <script setup>
-import { onMounted, onUpdated, nextTick } from 'vue'
 const service1 = new URL('../assets/images/gallery/req-1.avif', import.meta.url).href
 const service2 = new URL('../assets/images/gallery/req-2.webp', import.meta.url).href
 const service3 = new URL('../assets/images/gallery/pm-01.avif', import.meta.url).href
@@ -87,17 +86,6 @@ const services = [
   }
 ]
 
-onMounted(() => {
-  nextTick(() => {
-    if (window.refreshAnimations) window.refreshAnimations()
-  })
-})
-
-onUpdated(() => {
-  nextTick(() => {
-    if (window.refreshAnimations) window.refreshAnimations()
-  })
-})
 </script>
 <style scoped>
 </style>

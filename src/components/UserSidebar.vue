@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onBeforeUnmount, onUpdated, nextTick, ref } from 'vue'
+import { onMounted, onBeforeUnmount, ref } from 'vue'
 import vectorUserLight from '../assets/images/item/vector-user.svg'
 import vectorUserDark from '../assets/images/item/vector-user_dark.svg'
 import logoLight from '../assets/images/logo/light.png'
@@ -52,15 +52,6 @@ onMounted(() => {
     next.classList.add('is-visible')
     idx = (idx + 1) % items.length
   }, 2500)
-  nextTick(() => {
-    if (window.refreshAnimations) window.refreshAnimations()
-  })
-})
-
-onUpdated(() => {
-  nextTick(() => {
-    if (window.refreshAnimations) window.refreshAnimations()
-  })
 })
 
 onBeforeUnmount(() => {

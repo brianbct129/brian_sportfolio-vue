@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount, onUpdated, nextTick } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { certificates as certificatesData } from '../data/certificates'
 const yearsExperience = new Date().getFullYear() - 2020
 const totalCertificates = certificatesData.length
@@ -30,15 +30,6 @@ onMounted(() => {
     })
   }
 
-  nextTick(() => {
-    if (window.refreshAnimations) window.refreshAnimations()
-  })
-})
-
-onUpdated(() => {
-  nextTick(() => {
-    if (window.refreshAnimations) window.refreshAnimations()
-  })
 })
 
 onBeforeUnmount(() => {

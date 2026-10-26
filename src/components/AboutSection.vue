@@ -56,9 +56,6 @@ function detachHoverHandlers(container) {
 }
 onMounted(() => {
   if (root.value) attachHoverHandlers(root.value)
-  nextTick(() => {
-    if (window.refreshAnimations) window.refreshAnimations()
-  })
 })
 
 onUpdated(() => {
@@ -66,9 +63,6 @@ onUpdated(() => {
     detachHoverHandlers(root.value)
     attachHoverHandlers(root.value)
   }
-  nextTick(() => {
-    if (window.refreshAnimations) window.refreshAnimations()
-  })
 })
 
 onBeforeUnmount(() => {

@@ -43,7 +43,7 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, onBeforeUnmount, onUpdated, nextTick } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import visual_paradigm from '../assets/images/skills/visualparadigm.webp'
 import trello from '../assets/images/skills/trello.webp'
 import vue from '../assets/images/skills/vue.png'
@@ -67,15 +67,6 @@ onMounted(() => {
   })
   observer.observe(document.body, { attributes: true, attributeFilter: ['class'] })
   
-  nextTick(() => {
-    if (window.refreshAnimations) window.refreshAnimations()
-  })
-})
-
-onUpdated(() => {
-  nextTick(() => {
-    if (window.refreshAnimations) window.refreshAnimations()
-  })
 })
 
 onBeforeUnmount(() => {

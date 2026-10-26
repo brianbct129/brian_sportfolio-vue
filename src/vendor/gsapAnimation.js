@@ -1,8 +1,13 @@
 gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.config({ ignoreMobileResize: true });
 
 (function ($) {
     "use strict";
     // DOM Ready
+
+    const isMobileScroll = () =>
+        window.matchMedia("(max-width: 1199px), (pointer: coarse)").matches ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     /*========== Start - Scroll Text Animation ==========*/
     /* Animation Text
@@ -167,16 +172,24 @@ gsap.registerPlugin(ScrollTrigger);
             st.each(function (index, el) {
                 var $el = $(el);
                 var delay = parseFloat($el.data("delay")) || 0;
+                // scrub fights native mobile scroll — use one-shot play on touch/narrow
                 var settings = {
-                    scrollTrigger: {
-                        trigger: el,
-                        scrub: 3,
-                        once: true,
-                        toggleActions: "play none none none",
-                        start: "30px bottom",
-                        end: "bottom bottom",
-                        delay: delay,
-                    },
+                    scrollTrigger: isMobileScroll()
+                        ? {
+                              trigger: el,
+                              start: "top 92%",
+                              once: true,
+                              toggleActions: "play none none none",
+                          }
+                        : {
+                              trigger: el,
+                              scrub: 3,
+                              once: true,
+                              toggleActions: "play none none none",
+                              start: "30px bottom",
+                              end: "bottom bottom",
+                              delay: delay,
+                          },
                     duration: 0.8,
                     ease: "power3.out",
                 };
@@ -360,31 +373,42 @@ gsap.registerPlugin(ScrollTrigger);
     ---------------------------------------------------------- */
     var scrollLine = () => {
         if ($(".scroll-down").length) {
-            // setup progress line
             gsap.set(".prg-line", { height: "0%" });
-            gsap.to(".prg-line", {
-                height: "100%",
-                duration: 2,
-                ease: "none",
-                scrollTrigger: {
-                    trigger: ".scroll-down",
-                    start: "top 40%",
-                    end: "bottom 30%",
-                    scrub: true,
-                    // markers: true,
-                },
-            });
 
-            // activate timeline items
+            if (isMobileScroll()) {
+                // CSS-driven / one-shot: avoid continuous scrub on mobile
+                gsap.to(".prg-line", {
+                    height: "100%",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".scroll-down",
+                        start: "top 70%",
+                        end: "bottom 40%",
+                        scrub: 0.4,
+                        // lighter scrub still cheaper than desktop continuous + other effects
+                    },
+                });
+            } else {
+                gsap.to(".prg-line", {
+                    height: "100%",
+                    duration: 2,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".scroll-down",
+                        start: "top 40%",
+                        end: "bottom 30%",
+                        scrub: true,
+                    },
+                });
+            }
+
             const items = document.querySelectorAll(".timeline-item");
             items.forEach((item) => {
                 ScrollTrigger.create({
                     trigger: item,
-                    start: "top 30%",
-                    // end: "bottom 30%",
+                    start: "top 55%",
                     onEnter: () => item.classList.add("active"),
                     onLeaveBack: () => item.classList.remove("active"),
-                    // markers: true,
                 });
             });
         }
@@ -416,9 +440,18 @@ gsap.registerPlugin(ScrollTrigger);
     var service = () => {
         gsap.registerPlugin(ScrollTrigger);
 
+        // Desktop-only sticky detail panel — skip on mobile to free scroll budget
+        if (window.innerWidth < 1200 || isMobileScroll()) {
+            document.querySelector(".sidebar-user")?.classList.remove("active");
+            gsap.utils.toArray(".wrap").forEach((el) => el.classList.remove("active"));
+            return;
+        }
+
         let triggers = [];
         let isClickScrolling = false;
         let clickScrollTimer = null;
+        let resizeTimer = null;
+        let linksBound = false;
 
         function scrollActive() {
             const sidebar = document.querySelector(".sidebar-user");
@@ -442,7 +475,6 @@ gsap.registerPlugin(ScrollTrigger);
                 onEnterBack: () => !isClickScrolling && sidebar.classList.add("active"),
                 onLeaveBack: () => !isClickScrolling && sidebar.classList.remove("active"),
                 invalidateOnRefresh: true,
-                // markers: true, //Debug
             });
             triggers.push(sidebarTrigger);
 
@@ -473,41 +505,44 @@ gsap.registerPlugin(ScrollTrigger);
                         wrap.classList.remove("active");
                     },
                     invalidateOnRefresh: true,
-                    // markers: true, //Debug
                 });
                 triggers.push(workTrigger);
             });
 
-            document.querySelectorAll('a[href^="#"]').forEach((a) => {
-                a.addEventListener("click", () => {
-                    isClickScrolling = true;
-                    const href = a.getAttribute("href") || "";
-                    const resetSections = new Set([
-                        "#home",
-                        "#about",
-                        "#education",
-                        "#service",
-                        "#tech",
-                        "#testimonial",
-                        "#contact",
-                    ]);
- 
-                    clearTimeout(clickScrollTimer);
-                    clickScrollTimer = setTimeout(() => {
-                        isClickScrolling = false;
-                        if (resetSections.has(href)) {
-                            const sidebar = document.querySelector(".sidebar-user");
-                            gsap.utils.toArray(".wrap").forEach((el) => el.classList.remove("active"));
-                            if (sidebar) sidebar.classList.remove("active");
-                        }
-                        ScrollTrigger.refresh();
-                    }, 800);
-                });
-            });
+            if (!linksBound) {
+                linksBound = true;
+                document.querySelectorAll('a[href^="#"]').forEach((a) => {
+                    a.addEventListener("click", () => {
+                        isClickScrolling = true;
+                        const href = a.getAttribute("href") || "";
+                        const resetSections = new Set([
+                            "#home",
+                            "#about",
+                            "#education",
+                            "#service",
+                            "#tech",
+                            "#testimonial",
+                            "#contact",
+                        ]);
 
-            window.addEventListener("resize", () => {
-                ScrollTrigger.refresh();
-            });
+                        clearTimeout(clickScrollTimer);
+                        clickScrollTimer = setTimeout(() => {
+                            isClickScrolling = false;
+                            if (resetSections.has(href)) {
+                                const sidebarEl = document.querySelector(".sidebar-user");
+                                gsap.utils.toArray(".wrap").forEach((el) => el.classList.remove("active"));
+                                if (sidebarEl) sidebarEl.classList.remove("active");
+                            }
+                            ScrollTrigger.refresh();
+                        }, 800);
+                    });
+                });
+
+                window.addEventListener("resize", () => {
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
+                });
+            }
         }
 
         scrollActive();

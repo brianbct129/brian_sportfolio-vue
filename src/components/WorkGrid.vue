@@ -116,7 +116,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUpdated, nextTick } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import logoDark from '../assets/images/logo/dark.png'
 import logoLight from '../assets/images/logo/light.png'
 
@@ -152,15 +152,21 @@ const hasLink = (work) => {
 const withExpandState = (items) =>
   items.map((item) => ({ ...item, isExpanded: false }))
 
+let imageRefreshTimer = null
 const handleImageLoad = () => {
-  if (window.ScrollTrigger) window.ScrollTrigger.refresh()
+  // Debounce — many work images loading must not thrash ScrollTrigger mid-scroll
+  if (imageRefreshTimer) clearTimeout(imageRefreshTimer)
+  imageRefreshTimer = setTimeout(() => {
+    if (window.ScrollTrigger) window.ScrollTrigger.refresh()
+  }, 250)
 }
 
 const signalReady = () => {
   window.isDataLoaded = true
   if (window.hidePreloader) window.hidePreloader()
   nextTick(() => {
-    if (window.refreshAnimations) window.refreshAnimations()
+    // Force once after portfolio DOM exists — soft refresh elsewhere
+    if (window.refreshAnimations) window.refreshAnimations(true)
     if (window.applyImageSwitch) window.applyImageSwitch()
   })
 }
@@ -201,15 +207,6 @@ const fetchData = async () => {
 
 onMounted(() => {
   fetchData()
-  nextTick(() => {
-    if (window.refreshAnimations) window.refreshAnimations()
-  })
-})
-
-onUpdated(() => {
-  nextTick(() => {
-    if (window.refreshAnimations) window.refreshAnimations()
-  })
 })
 </script>
 

@@ -55,20 +55,30 @@ const applyImageSwitch = () => {
 applyImageSwitch()
 window.applyImageSwitch = applyImageSwitch
 
-window.refreshAnimations = () => {
-  if (window.ScrollTrigger) {
-    window.ScrollTrigger.getAll().forEach(t => t.kill())
-  }
-  if (window.runAnimations) {
-    window.runAnimations()
-  }
+// Soft refresh by default (cheap). Pass true only after major DOM changes.
+let refreshTimer = null
+let isRefreshing = false
+window.refreshAnimations = (force = false) => {
+  if (refreshTimer) clearTimeout(refreshTimer)
+  refreshTimer = setTimeout(() => {
+    if (isRefreshing) return
+    isRefreshing = true
+    try {
+      if (force) {
+        if (window.ScrollTrigger) {
+          window.ScrollTrigger.getAll().forEach((t) => t.kill())
+        }
+        if (window.runAnimations) window.runAnimations()
+      } else if (window.ScrollTrigger) {
+        window.ScrollTrigger.refresh()
+      }
+    } finally {
+      isRefreshing = false
+    }
+  }, 180)
 }
 
 new MutationObserver(() => {
   applyImageSwitch()
-  if (window.refreshAnimations) {
-    setTimeout(() => {
-      window.refreshAnimations()
-    }, 100)
-  }
+  // Theme toggle: only remount image sources — do NOT rebuild ScrollTriggers
 }).observe(document.body, { attributes: true, attributeFilter: ['class'] })
