@@ -51,39 +51,74 @@ import dark_binus from '../assets/images/item/dark_binus.png'
 import light_qf from '../assets/images/item/light_qf.png'
 import dark_qf from '../assets/images/item/dark_qf.png'
 import smartindo from '../assets/images/item/smartindo.png'
+import jinmu from '../assets/images/item/jinmu.png'
+import sapta from '../assets/images/item/sapta.png'
 const timelineItems = [
-   { 
-    date: '2024 - Present',
+  {
+    date: '2026 - Present',
     icon: { light: smartindo, dark: smartindo, w: 200, h: 120 },
     contents: [
       {
-        role: 'System Analyst',
+        role: 'System Architect — PT Smartindo Integrasi System',
         points: [
-          'As a System Analyst, I support the continuous enhancement of internal systems by bridging business needs with effective technical solutions. I analyze and document business processes, translate them into clear system requirements, and collaborate closely with cross-functional teams to ensure successful implementation.',
-          'I play a key role in improving the user experience of our internal system (Version 2), refining front-end layouts, and reviewing both frontend and backend code to ensure quality, scalability, and alignment with best practices. I also contribute to backend performance by identifying opportunities for database and query optimization to ensure large datasets render efficiently on the frontend.',
-          'Working within an Agile environment, I facilitate sprint ceremonies, break down requirements into actionable tasks, and help maintain development momentum by addressing blockers and monitoring progress. I act as an intermediary between stakeholders, product owners, and developers—ensuring alignment, clarity, and smooth communication throughout the project lifecycle.',
+          'Lead end-to-end integration architecture for enterprise systems including HRIS, Core Sales & Purchase, Accounting & Finance, CRM, Project Management, Helpdesk, Ticketing, and AI Integration modules.',
+          'Define system integration standards and ensure interoperability across platforms to support business scalability and operational continuity.',
+          'Collaborate with C-level stakeholders to align technology roadmaps with organizational growth objectives.',
+        ],
+      },
+      {
+        role: 'System Analyst — Contract (Dec 2024 – Apr 2026)',
+        points: [
+          'Analyzed and documented business processes, translating complex requirements into clear system specifications for development teams.',
+          'Enhanced Version 2 frontend UX and reviewed frontend/backend code for quality, scalability, and performance.',
+          'Facilitated Agile ceremonies, prioritized development tasks, and optimized database queries for efficient large-dataset rendering.',
         ],
       },
     ],
   },
-  { 
-    date: '2024 - Present',
+  {
+    date: '2026 - Present',
+    icon: { light: jinmu, dark: jinmu, w: 200, h: 120 },
+    contents: [
+      {
+        role: 'Software Engineer — Jin Mu Group',
+        points: [
+          'Developed JINMU POS Resto Cashier system and Supply Chain Restaurant Management platform from scratch using Laravel and Vue.js.',
+          'Architected a full-stack solution covering order management, inventory control, and real-time reporting for restaurant operations.',
+        ],
+      },
+    ],
+  },
+  {
+    date: '2025 - Present',
+    icon: { light: sapta, dark: sapta, w: 200, h: 120 },
+    contents: [
+      {
+        role: 'System Architect — Sapta Tunas Teknologi',
+        points: [
+          'Design and oversee system architecture for enterprise technology solutions, ensuring alignment with business strategy and scalability requirements.',
+        ],
+      },
+    ],
+  },
+  {
+    date: '2023 - 2025',
     icon: { light: dark_qf, dark: light_qf, w: 200, h: 120 },
     contents: [
       {
-        role: 'Software Engineer (2023 - Present)',
-        points: [
-          'Engineered and optimized dynamic front-end and server-side components using Node.js, Bootstrap, Vue.js, and Laravel—significantly enhancing responsiveness and reliability.',
-          'Spearheaded collaboration with designers, PMs, and developers to gather requirements and design solutions—reducing delivery time by 20% and aligning with user and technical needs.',
-          'Wrote clean, maintainable code following best practices; optimized apps for speed and scalability; resolved issues to improve performance and reliability.',
-        ],
-      },
-      {
-        role: 'IT Tech Consultant (2023 - 2025)',
+        role: 'IT Tech Consultant — Full Time (Nov 2023 – Feb 2025)',
         points: [
           'Conduct in-depth analysis of clients’ IT systems and business requirements to design and implement solutions that enhance efficiency and support strategic objectives.',
           'Lead and manage IT projects end-to-end—ensuring on-time, on-budget delivery; coordinate stakeholders, configure systems, and provide training and support.',
           'Monitor and evaluate solution performance, provide ongoing improvements, and leverage emerging technologies to drive growth and competitiveness.',
+        ],
+      },
+      {
+        role: 'Software Engineer — Freelance (Jan 2023 – Present)',
+        points: [
+          'Engineered and optimized dynamic front-end and server-side components using Node.js, Bootstrap, Vue.js, and Laravel—significantly enhancing responsiveness and reliability.',
+          'Spearheaded collaboration with designers, PMs, and developers to gather requirements and design solutions—reducing delivery time by 20% and aligning with user and technical needs.',
+          'Wrote clean, maintainable code following best practices; optimized apps for speed and scalability; resolved issues to improve performance and reliability.',
         ],
       },
     ],

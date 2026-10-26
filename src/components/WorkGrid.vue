@@ -1,45 +1,74 @@
 <template>
   <div id="work" class="section-work flat-spacing">
     <div class="sect-tag text-caption fw-medium">
-      <i class="icon icon-high-light"></i>
+      <i class="icon icon-high-light" aria-hidden="true"></i>
       Work Highlights
     </div>
-    <div class="work-list element-sticky">
-      <div v-if="loading" class="text-center text-white-72">Loading works...</div>
-      <div v-else-if="error" class="text-center text-danger">Error loading works: {{ error }}</div>
-      <div v-else v-for="(work, index) in works" :key="work.id || index" class="sticky-item">
-        <div class="wg-work">
+    <div class="work-list element-sticky" :aria-busy="loading">
+      <div v-if="loading" class="text-center text-white-72" role="status">Loading works...</div>
+      <div v-else-if="error && !works.length" class="text-center text-danger" role="alert">
+        Error loading works: {{ error }}
+      </div>
+      <div
+        v-else
+        v-for="(work, index) in works"
+        :key="work.id || index"
+        class="sticky-item"
+      >
+        <article class="wg-work work-card" :class="{ 'is-expanded': work.isExpanded }">
           <div class="work-image">
-            <img loading="lazy" width="900" height="427" :src="work.images1" :alt="work.title || 'Work Image'">
+            <img
+              loading="lazy"
+              width="900"
+              height="506"
+              :src="work.images1"
+              :alt="work.title || 'Work Image'"
+            >
           </div>
           <div class="wrap">
             <div class="work-content">
-              <div class="w-image">
-                <img @load="handleImageLoad" loading="lazy" width="468" height="856" :src="work.images1" :alt="work.title || 'Work Image'">
+              <div class="w-image" aria-hidden="true">
+                <img
+                  @load="handleImageLoad"
+                  loading="lazy"
+                  width="468"
+                  height="856"
+                  :src="work.images1"
+                  alt=""
+                >
               </div>
               <div class="content">
                 <div class="content-top">
                   <div class="w-logo">
-                    <img class="image-switch" loading="lazy" width="40" height="40" :src="logoLight" :data-light="logoLight" :data-dark="logoDark" alt="Image">
-                  </div>
-                  <h4 class="w-title letter-space--2 text-white-72">{{ work.title || 'Project Name' }}</h4>
-                  <p class="w-desc text-white-56 text-body-3">
-                    <span v-if="!work.isExpanded">
-                      {{ (work.description_proyek || 'No description available.').length > 200 ? (work.description_proyek || 'No description available.').substring(0, 200) + '...' : (work.description_proyek || 'No description available.') }}
-                    </span>
-                    <span v-else>
-                      {{ work.description_proyek || 'No description available.' }}
-                    </span>
-                    <a 
-                      href="#"
-                      v-if="(work.description_proyek || 'No description available.').length > 200" 
-                      @click.prevent="work.isExpanded = !work.isExpanded" 
-                      class="read-more-btn text-white-72 fw-medium ms-2" 
-                      style="text-decoration: underline; font-size: 14px; margin-top: 4px; display: inline-block;"
+                    <img
+                      class="image-switch"
+                      loading="lazy"
+                      width="40"
+                      height="40"
+                      :src="logoLight"
+                      :data-light="logoLight"
+                      :data-dark="logoDark"
+                      alt=""
                     >
-                      {{ work.isExpanded ? 'Show Less' : 'Read More' }}
-                    </a>
+                  </div>
+                  <h4 class="w-title letter-space--2 text-white-72">
+                    {{ work.title || 'Project Name' }}
+                  </h4>
+                  <p
+                    class="w-desc text-white-56 text-body-3"
+                    :class="{ 'is-expanded': work.isExpanded }"
+                  >
+                    {{ work.description_proyek || 'No description available.' }}
                   </p>
+                  <button
+                    v-if="needsExpand(work)"
+                    type="button"
+                    class="read-more-btn text-white-72 fw-medium"
+                    :aria-expanded="!!work.isExpanded"
+                    @click="toggleExpand(work)"
+                  >
+                    {{ work.isExpanded ? 'Show Less' : 'Read More' }}
+                  </button>
                   <div class="w-highlight">
                     <div class="box-high">
                       <p class="text-body-3 text-white-56">Year</p>
@@ -52,33 +81,47 @@
                   </div>
                   <div class="w-tag-list">
                     <div class="tag">
-                        <span class="text-body-3 fw-medium text-white-72">{{ work.category_name }}</span>
+                      <span class="text-body-3 fw-medium text-white-72">{{ work.category_name }}</span>
                     </div>
                   </div>
                 </div>
                 <div class="content-bottom">
                   <div class="br-line"></div>
                   <div class="group-action">
-                    <a :href="work.link" target="_blank" class="tf-btn-action style-white">
-                      <span class="ic-wrap"><i class="icon icon-arrow-right-top"></i></span>
+                    <a
+                      v-if="hasLink(work)"
+                      :href="work.link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="tf-btn-action style-white"
+                    >
+                      <span class="ic-wrap" aria-hidden="true"><i class="icon icon-arrow-right-top"></i></span>
                       <span class="text text-body-3 letter-space--05 fw-medium">Link</span>
-                      <span class="ic-wrap"><i class="icon icon-arrow-right-top"></i></span>
+                      <span class="ic-wrap" aria-hidden="true"><i class="icon icon-arrow-right-top"></i></span>
                     </a>
-                    <p class="text-white-40"><span class="text-white-72">{{ String(index + 1).padStart(2, '0') }}</span> / {{ String(works.length).padStart(2, '0') }}</p>
+                    <span v-else class="text-white-40 text-body-3">Portfolio highlight</span>
+                    <p class="text-white-40">
+                      <span class="text-white-72">{{ String(index + 1).padStart(2, '0') }}</span>
+                      / {{ String(works.length).padStart(2, '0') }}
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </article>
       </div>
     </div>
   </div>
 </template>
+
 <script setup>
 import { ref, onMounted, onUpdated, nextTick } from 'vue'
 import logoDark from '../assets/images/logo/dark.png'
 import logoLight from '../assets/images/logo/light.png'
+
+const DESC_CLAMP_CHARS = 160
+
 const works = ref([])
 const loading = ref(true)
 const error = ref(null)
@@ -91,54 +134,68 @@ const formatYear = (value) => {
   return isNaN(d.getTime()) ? '' : String(d.getUTCFullYear())
 }
 
+const needsExpand = (work) =>
+  (work.description_proyek || 'No description available.').length > DESC_CLAMP_CHARS
+
+const toggleExpand = (work) => {
+  work.isExpanded = !work.isExpanded
+  nextTick(() => {
+    if (window.ScrollTrigger) window.ScrollTrigger.refresh()
+  })
+}
+
+const hasLink = (work) => {
+  const link = (work.link || '').trim()
+  return Boolean(link && link !== '#' && !link.startsWith('javascript:'))
+}
+
+const withExpandState = (items) =>
+  items.map((item) => ({ ...item, isExpanded: false }))
+
 const handleImageLoad = () => {
-  if (window.ScrollTrigger) {
-    window.ScrollTrigger.refresh()
-  }
+  if (window.ScrollTrigger) window.ScrollTrigger.refresh()
+}
+
+const signalReady = () => {
+  window.isDataLoaded = true
+  if (window.hidePreloader) window.hidePreloader()
+  nextTick(() => {
+    if (window.refreshAnimations) window.refreshAnimations()
+    if (window.applyImageSwitch) window.applyImageSwitch()
+  })
 }
 
 const fetchData = async () => {
   try {
-    // Determine the API URL based on environment
-    // In Dev: Use proxy /api-proxy/portfolios (API key handled by proxy)
-    // In Prod: Use direct URL (API key appended manually)
     const apiKey = import.meta.env.VITE_QUANTUM_PORTFOLIO_API_KEY
-    const apiUrl = import.meta.env.DEV 
-      ? '/api-proxy/portfolios' 
+    const apiUrl = import.meta.env.DEV
+      ? '/api-proxy/portfolios'
       : `https://quantumitco.com/api/portfolios?api_key=${apiKey}`
 
     const response = await fetch(apiUrl)
-    const contentType = response.headers.get("content-type");
-    if (contentType && contentType.indexOf("application/json") === -1) {
-      const text = await response.text();
-      // Check if it's the HTML fallback (likely index.html)
-      if (text.includes("<!doctype html>") || text.includes("<html")) {
-        throw new Error("Received HTML instead of JSON. The proxy might not be configured correctly. Please restart your dev/preview server.");
+    const contentType = response.headers.get('content-type')
+    if (contentType && contentType.indexOf('application/json') === -1) {
+      const text = await response.text()
+      if (text.includes('<!doctype html>') || text.includes('<html')) {
+        throw new Error(
+          'Received HTML instead of JSON. The proxy might not be configured correctly. Please restart your dev/preview server.'
+        )
       }
-      throw new Error(`Expected JSON but received ${contentType}`);
+      throw new Error(`Expected JSON but received ${contentType}`)
     }
 
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-    }
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
+
     const data = await response.json()
-    // Handle likely API response structures (array or object with data property)
-    works.value = Array.isArray(data) ? data : (data.data || [])
+    const remote = Array.isArray(data) ? data : (data.data || [])
+    works.value = withExpandState(remote)
   } catch (e) {
-    console.error("Failed to fetch portfolios:", e)
+    console.error('Failed to fetch portfolios:', e)
     error.value = e.message
+    works.value = []
   } finally {
     loading.value = false
-    // Signal that data is loaded
-    window.isDataLoaded = true
-    // Try to hide preloader if the function is already available
-    if (window.hidePreloader) window.hidePreloader()
-
-    // Trigger animation refresh after DOM update
-    nextTick(() => {
-        if (window.refreshAnimations) window.refreshAnimations()
-        if (window.applyImageSwitch) window.applyImageSwitch()
-    })
+    signalReady()
   }
 }
 
@@ -155,5 +212,76 @@ onUpdated(() => {
   })
 })
 </script>
+
 <style scoped>
+.work-card :deep(.w-title) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  min-height: 2.4em;
+  text-wrap: balance;
+}
+
+.work-card :deep(.w-desc) {
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+/* Collapsed = fixed 4 lines so every card matches */
+.work-card :deep(.w-desc:not(.is-expanded)) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
+  min-height: calc(1.6em * 4);
+  max-height: calc(1.6em * 4);
+}
+
+.work-card :deep(.w-desc.is-expanded) {
+  display: block;
+  min-height: 0;
+  max-height: none;
+}
+
+.read-more-btn {
+  text-decoration: underline;
+  font-size: 14px;
+  line-height: 1.2;
+  min-height: 44px;
+  padding: 10px 0;
+  margin: 0 0 8px;
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.read-more-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.72);
+  outline-offset: 2px;
+}
+
+@media (min-width: 1200px) {
+  .work-card :deep(.w-title) {
+    min-height: 0;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    display: block;
+  }
+
+  .work-card :deep(.w-desc:not(.is-expanded)) {
+    min-height: 0;
+    max-height: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-card :deep(.wrap) {
+    transition: none !important;
+  }
+}
 </style>
