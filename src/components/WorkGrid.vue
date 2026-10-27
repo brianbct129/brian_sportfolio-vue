@@ -16,24 +16,28 @@
         class="sticky-item"
       >
         <article class="wg-work work-card" :class="{ 'is-expanded': work.isExpanded }">
-          <div class="work-image">
+          <div class="work-image" :class="{ 'is-ready': work.imageReady }">
             <img
               loading="lazy"
+              decoding="async"
               width="900"
               height="506"
-              :src="work.images1"
+              :src="work.displaySrc || work.images1"
               :alt="work.title || 'Work Image'"
+              @load="onWorkImageLoad(work)"
+              @error="onWorkImageLoad(work)"
             >
           </div>
           <div class="wrap">
             <div class="work-content">
-              <div class="w-image" aria-hidden="true">
+              <div class="w-image" :class="{ 'is-ready': work.imageReady }" aria-hidden="true">
                 <img
-                  @load="handleImageLoad"
+                  @load="onWorkImageLoad(work)"
                   loading="lazy"
+                  decoding="async"
                   width="468"
                   height="856"
-                  :src="work.images1"
+                  :src="work.displaySrc || work.images1"
                   alt=""
                 >
               </div>
@@ -119,6 +123,7 @@
 import { ref, onMounted, nextTick } from 'vue'
 import logoDark from '../assets/images/logo/dark.png'
 import logoLight from '../assets/images/logo/light.png'
+import { resolveCachedImages } from '../utils/imageCache'
 
 const DESC_CLAMP_CHARS = 160
 
@@ -150,15 +155,33 @@ const hasLink = (work) => {
 }
 
 const withExpandState = (items) =>
-  items.map((item) => ({ ...item, isExpanded: false }))
+  items.map((item) => ({
+    ...item,
+    isExpanded: false,
+    imageReady: false,
+    displaySrc: item.images1 || '',
+  }))
 
 let imageRefreshTimer = null
-const handleImageLoad = () => {
+const scheduleImageRefresh = () => {
   // Debounce — many work images loading must not thrash ScrollTrigger mid-scroll
   if (imageRefreshTimer) clearTimeout(imageRefreshTimer)
   imageRefreshTimer = setTimeout(() => {
     if (window.ScrollTrigger) window.ScrollTrigger.refresh()
   }, 250)
+}
+
+const onWorkImageLoad = (work) => {
+  if (work && !work.imageReady) work.imageReady = true
+  scheduleImageRefresh()
+}
+
+const hydrateImageCache = async (items) => {
+  const map = await resolveCachedImages(items.map((w) => w.images1).filter(Boolean))
+  items.forEach((work) => {
+    const cached = map[work.images1]
+    if (cached) work.displaySrc = cached
+  })
 }
 
 const signalReady = () => {
@@ -194,7 +217,10 @@ const fetchData = async () => {
 
     const data = await response.json()
     const remote = Array.isArray(data) ? data : (data.data || [])
-    works.value = withExpandState(remote)
+    const prepared = withExpandState(remote)
+    works.value = prepared
+    // Persist remote images in Cache API so revisit / scroll is instant
+    hydrateImageCache(prepared).catch(() => {})
   } catch (e) {
     console.error('Failed to fetch portfolios:', e)
     error.value = e.message
@@ -276,9 +302,31 @@ onMounted(() => {
   }
 }
 
+.work-card :deep(.work-image),
+.work-card :deep(.w-image) {
+  background: color-mix(in srgb, #fff 8%, transparent);
+}
+
+.work-card :deep(.work-image img),
+.work-card :deep(.w-image img) {
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+.work-card :deep(.work-image.is-ready img),
+.work-card :deep(.w-image.is-ready img) {
+  opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .work-card :deep(.wrap) {
     transition: none !important;
+  }
+
+  .work-card :deep(.work-image img),
+  .work-card :deep(.w-image img) {
+    opacity: 1;
+    transition: none;
   }
 }
 </style>

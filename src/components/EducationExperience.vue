@@ -1,18 +1,26 @@
 <template>
   <div id="education" class="section-education-experience flat-spacing">
     <div class="sect-tag text-caption fw-medium effectFade fadeUp no-div">
-      <i class="icon icon-edu"></i>
+      <i class="icon icon-edu" aria-hidden="true"></i>
       Education & Experience
     </div>
     <div class="timeline scroll-down">
       <div class="timeline-line">
         <div class="prg-line"></div>
       </div>
-      <div class="timeline-item effectFade fadeUp no-div" v-for="(item, idx) in timelineItems" :key="idx">
+      <div
+        class="timeline-item effectFade fadeUp no-div"
+        v-for="(item, idx) in timelineItems"
+        :key="idx"
+      >
         <p class="timeline-date text-black-56">{{ item.date }}</p>
         <div class="timeline-dot"></div>
         <div class="timeline-content">
-          <div class="icon">
+          <div
+            class="icon timeline-logo"
+            :class="{ 'is-loaded': loadedIcons[idx] }"
+            :style="{ '--logo-w': item.icon.w + 'px', '--logo-h': item.icon.h + 'px' }"
+          >
             <img
               class="image-switch"
               :data-dark="item.icon.dark"
@@ -20,7 +28,13 @@
               :src="item.icon.light"
               :width="item.icon.w"
               :height="item.icon.h"
-              alt="Image"
+              :loading="idx < 3 ? 'eager' : 'lazy'"
+              :fetchpriority="idx === 0 ? 'high' : 'auto'"
+              decoding="async"
+              alt=""
+              aria-hidden="true"
+              @load="markIconLoaded(idx)"
+              @error="markIconLoaded(idx)"
             >
           </div>
           <template v-for="(content, cIdx) in item.contents" :key="cIdx">
@@ -42,6 +56,7 @@
   </div>
 </template>
 <script setup>
+import { reactive, onMounted } from 'vue'
 import dark_apu from '../assets/images/item/dark_apu.png'
 import light_apu from '../assets/images/item/light_apu.png'
 import light_dbs from '../assets/images/item/light_dbs.png'
@@ -53,6 +68,8 @@ import dark_qf from '../assets/images/item/dark_qf.png'
 import smartindo from '../assets/images/item/smartindo.png'
 import jinmu from '../assets/images/item/jinmu.png'
 import sapta from '../assets/images/item/sapta.png'
+import { warmImage } from '../utils/imageCache'
+
 const timelineItems = [
   {
     date: '2026 - Present',
@@ -162,6 +179,53 @@ const timelineItems = [
     ],
   },
 ]
+
+const loadedIcons = reactive({})
+
+const markIconLoaded = (idx) => {
+  loadedIcons[idx] = true
+}
+
+onMounted(() => {
+  // Prefetch light + dark variants so theme switch / scroll reveal doesn't wait on decode
+  const urls = new Set()
+  timelineItems.forEach((item) => {
+    urls.add(item.icon.light)
+    urls.add(item.icon.dark)
+  })
+  urls.forEach(warmImage)
+})
 </script>
 <style scoped>
+.timeline-logo {
+  position: relative;
+  width: min(100%, var(--logo-w, 200px));
+  aspect-ratio: var(--logo-w, 200) / var(--logo-h, 120);
+  max-height: var(--logo-h, 120px);
+  background: color-mix(in srgb, var(--black, #111) 6%, transparent);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.timeline-logo img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.timeline-logo.is-loaded img {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-logo img {
+    opacity: 1;
+    transition: none;
+  }
+}
 </style>
