@@ -4,15 +4,24 @@ import vectorUserLight from '../assets/images/item/vector-user.svg'
 import vectorUserDark from '../assets/images/item/vector-user_dark.svg'
 import logoLight from '../assets/images/logo/light.png'
 import logoDark from '../assets/images/logo/dark.png'
-import avatarImg from '../assets/images/avatar/avatar.png'
 import cvPdf from '../assets/attachment/CV_Brian.pdf'
+/** Served from /public so index.html can preload before Vue mounts */
+const avatarImg = '/avatar.png'
 const root = ref(null)
 const isDark = ref(false)
+const avatarLoaded = ref(false)
 let t = null
 let observer = null
 
 onMounted(() => {
   isDark.value = document.body.classList.contains('dark-mode')
+
+  // Preload/cache may finish before @load is attached
+  const avatarEl = root.value?.querySelector('.avatar-shell img')
+  if (avatarEl?.complete && avatarEl.naturalWidth > 0) {
+    avatarLoaded.value = true
+  }
+
   observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       if (mutation.attributeName === 'class') {
@@ -63,8 +72,16 @@ onBeforeUnmount(() => {
   <div class="sidebar-user" ref="root">
     <div class="wrap">
       <div class="user-image">
-        <div class="image">
-          <img loading="lazy" width="468" height="856" :src="avatarImg" alt="Image">
+        <div class="image avatar-shell" :class="{ 'is-loaded': avatarLoaded }">
+          <img
+            width="468"
+            height="856"
+            :src="avatarImg"
+            alt="Brian Cavarel Thomas"
+            decoding="async"
+            fetchpriority="high"
+            @load="avatarLoaded = true"
+          >
         </div>
         <div class="meta-left d-none d-sm-block">
           <div class="bg-item-svg">

@@ -4515,10 +4515,27 @@ button.animate-btn::after,
 .sidebar-user .user-image .image {
   position: relative;
   z-index: 1;
+  aspect-ratio: 468 / 856;
+  width: 100%;
+  overflow: hidden;
 }
 .sidebar-user .user-image .image img {
   width: 100%;
+  height: 100%;
   object-fit: cover;
+}
+.sidebar-user .user-image .image.avatar-shell img {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.sidebar-user .user-image .image.avatar-shell.is-loaded img {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-user .user-image .image.avatar-shell img {
+    transition: none;
+    opacity: 1;
+  }
 }
 .sidebar-user .user-image .meta-left {
   position: absolute;
@@ -4579,9 +4596,6 @@ button.animate-btn::after,
   display: flex;
   align-items: center;
   gap: 20px;
-}
-.sidebar-user .user-image .image img {
-  aspect-ratio: 0.546728972;
 }
 .sidebar-user.active {
   transform: translateY(-20px) !important;
@@ -4691,9 +4705,6 @@ button.animate-btn::after,
 @media (max-width: 425px) {
   .sidebar-user .user-image {
     display: flex;
-  }
-  .sidebar-user .user-image .image img {
-    aspect-ratio: 0.546728972;
   }
 }
 
